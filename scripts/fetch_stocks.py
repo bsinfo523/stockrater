@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 """
 StockRater - Datenbeschaffungsskript
-====================================
-Dieses Skript lädt Finanzdaten für die größten Aktiengesellschaften
-weltweit und berechnet das TransparentShare-Rating (12 Kennzahlen).
+=====================================
+Holt Aktienlisten von Wikipedia (robust, spaltenunabhängig)
+und Finanzdaten von Yahoo Finance (kostenlos, kein API-Key).
 
 Voraussetzungen:
-    pip install yfinance pandas requests beautifulsoup4
+    pip install yfinance pandas requests beautifulsoup4 lxml
 
 Ausführung:
-    python fetch_stocks.py
-
-Ergebnis:
-    stocks.json  → In den GitHub Pages Ordner kopieren
+    python scripts/fetch_stocks.py
 """
 
 import yfinance as yf
@@ -20,438 +17,517 @@ import pandas as pd
 import json
 import time
 import requests
+import os
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-import math
 
 # ─────────────────────────────────────────────
 #  KONFIGURATION
 # ─────────────────────────────────────────────
-MAX_STOCKS = 10000          # Maximale Anzahl Aktien
-DELAY_BETWEEN_REQUESTS = 0.5  # Sekunden zwischen API-Anfragen
-OUTPUT_FILE = "docs/stocks.json"
+MAX_STOCKS          = 10000
+DELAY               = 0.4   # Sekunden zwischen Yahoo-Anfragen
+OUTPUT_FILE         = "docs/stocks.json"
+HEADERS             = {"User-Agent": "Mozilla/5.0 (compatible; StockRater/1.0)"}
 
 # ─────────────────────────────────────────────
-#  AKTIENLISTEN ZUSAMMENSTELLEN
+#  HILFSFUNKTION: Wikipedia-Tabelle robust lesen
 # ─────────────────────────────────────────────
 
-def get_sp500_tickers():
-    """S&P 500 von Wikipedia"""
-    url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+def fetch_wiki_table(url, min_rows=10):
+    """
+    Lädt alle Tabellen einer Wikipedia-Seite via BeautifulSoup.
+    Gibt Liste von DataFrames zurück, gefiltert auf min_rows Zeilen.
+    """
     try:
-        tables = pd.read_html(url)
-        df = tables[0]
-        tickers = df['Symbol'].tolist()
-        names = df['Security'].tolist()
-        sectors = df['GICS Sector'].tolist()
-        return [(t.replace('.', '-'), n, s, 'S&P 500') for t, n, s in zip(tickers, names, sectors)]
+        r = requests.get(url, headers=HEADERS, timeout=15)
+        r.raise_for_status()
+        tables = pd.read_html(r.text, flavor="lxml")
+        return [t for t in tables if len(t) >= min_rows]
     except Exception as e:
-        print(f"Fehler S&P 500: {e}")
+        print(f"    Wiki-Fehler ({url}): {e}")
         return []
 
-def get_dax_tickers():
-    """DAX 40 von Wikipedia"""
-    url = "https://en.wikipedia.org/wiki/DAX"
-    try:
-        tables = pd.read_html(url)
-        # Tabelle mit Ticker-Symbolen finden
-        for table in tables:
-            if 'Ticker symbol' in table.columns or 'Symbol' in table.columns:
-                col = 'Ticker symbol' if 'Ticker symbol' in table.columns else 'Symbol'
-                name_col = 'Company' if 'Company' in table.columns else table.columns[0]
-                tickers = table[col].tolist()
-                names = table[name_col].tolist()
-                # Yahoo Finance braucht .DE Suffix für deutsche Aktien
-                return [(str(t).strip() + '.DE', str(n), 'Various', 'DAX')
-                        for t, n in zip(tickers, names) if str(t) != 'nan']
-    except Exception as e:
-        print(f"Fehler DAX: {e}")
+def find_col(df, candidates):
+    """Findet die erste Spalte deren Name einen der Kandidaten enthält (case-insensitive)."""
+    cols_lower = {c.lower(): c for c in df.columns}
+    for cand in candidates:
+        for lower, original in cols_lower.items():
+            if cand.lower() in lower:
+                return original
+    return None
+
+def extract_tickers(df, sym_hints, name_hints, suffix="", exchange=""):
+    """
+    Extrahiert (symbol, name, sector, exchange) aus einem DataFrame.
+    sym_hints / name_hints: Liste möglicher Spaltennamen-Fragmente.
+    """
+    sym_col  = find_col(df, sym_hints)
+    name_col = find_col(df, name_hints)
+    if not sym_col:
+        return []
+    results = []
+    for _, row in df.iterrows():
+        sym = str(row[sym_col]).strip().replace(".", "-") if "." not in suffix else str(row[sym_col]).strip()
+        if sym in ("nan", "", "-", "N/A"):
+            continue
+        sym = sym + suffix if suffix and not sym.endswith(suffix) else sym
+        name = str(row[name_col]).strip() if name_col else sym
+        results.append((sym, name, "", exchange))
+    return results
+
+# ─────────────────────────────────────────────
+#  AKTIENLISTEN
+# ─────────────────────────────────────────────
+
+def get_sp500():
+    url = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+    tables = fetch_wiki_table(url, min_rows=400)
+    for df in tables:
+        sym_col  = find_col(df, ["symbol", "ticker"])
+        name_col = find_col(df, ["security", "company", "name"])
+        sec_col  = find_col(df, ["sector", "gics sector"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip().replace(".", "-")
+            if sym in ("nan", ""):
+                continue
+            name = str(row[name_col]).strip() if name_col else sym
+            sec  = str(row[sec_col]).strip()  if sec_col  else ""
+            results.append((sym, name, sec, "S&P 500"))
+        if len(results) > 400:
+            return results
     return []
 
-def get_stoxx50_tickers():
-    """EURO STOXX 50"""
-    url = "https://en.wikipedia.org/wiki/Euro_Stoxx_50"
-    try:
-        tables = pd.read_html(url)
-        for table in tables:
-            cols = [c.lower() for c in table.columns]
-            if any('ticker' in c or 'symbol' in c for c in cols):
-                sym_col = next(c for c in table.columns if 'ticker' in c.lower() or 'symbol' in c.lower())
-                name_col = table.columns[0]
-                return [(str(t).strip(), str(n), 'Various', 'EURO STOXX 50')
-                        for t, n in zip(table[sym_col], table[name_col]) if str(t) != 'nan']
-    except Exception as e:
-        print(f"Fehler STOXX 50: {e}")
-    return []
-
-def get_nasdaq100_tickers():
-    """NASDAQ 100"""
+def get_nasdaq100():
     url = "https://en.wikipedia.org/wiki/Nasdaq-100"
-    try:
-        tables = pd.read_html(url)
-        for table in tables:
-            if 'Ticker' in table.columns or 'Symbol' in table.columns:
-                col = 'Ticker' if 'Ticker' in table.columns else 'Symbol'
-                name_col = 'Company' if 'Company' in table.columns else table.columns[0]
-                return [(str(t).strip(), str(n), 'Technology', 'NASDAQ 100')
-                        for t, n in zip(table[col], table[name_col]) if str(t) != 'nan']
-    except Exception as e:
-        print(f"Fehler NASDAQ 100: {e}")
+    tables = fetch_wiki_table(url, min_rows=90)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "security", "name"])
+        if not sym_col:
+            continue
+        results = extract_tickers(df, ["ticker","symbol"], ["company","security","name"], exchange="NASDAQ 100")
+        if len(results) > 80:
+            return results
     return []
 
-def get_ftse100_tickers():
-    """FTSE 100"""
+def get_dax():
+    url = "https://en.wikipedia.org/wiki/DAX"
+    tables = fetch_wiki_table(url, min_rows=35)
+    for df in tables:
+        sym_col = find_col(df, ["ticker", "symbol", "index"])
+        if not sym_col:
+            continue
+        name_col = find_col(df, ["company", "name", "member"])
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 10:
+                continue
+            # Entferne .DE falls schon vorhanden, füge es dann sauber an
+            sym = sym.replace(".DE", "").replace(".de", "") + ".DE"
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "DAX"))
+        if len(results) >= 35:
+            return results
+    return []
+
+def get_mdax():
+    url = "https://en.wikipedia.org/wiki/MDAX"
+    tables = fetch_wiki_table(url, min_rows=40)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "name", "member"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 10:
+                continue
+            sym = sym.replace(".DE","") + ".DE"
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "MDAX"))
+        if len(results) >= 40:
+            return results
+    return []
+
+def get_stoxx50():
+    url = "https://en.wikipedia.org/wiki/Euro_Stoxx_50"
+    tables = fetch_wiki_table(url, min_rows=40)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = extract_tickers(df, ["ticker","symbol"], ["company","name"], exchange="EURO STOXX 50")
+        if len(results) >= 40:
+            return results
+    return []
+
+def get_ftse100():
     url = "https://en.wikipedia.org/wiki/FTSE_100_Index"
-    try:
-        tables = pd.read_html(url)
-        for table in tables:
-            if 'Ticker' in table.columns or 'EPIC' in table.columns:
-                col = 'EPIC' if 'EPIC' in table.columns else 'Ticker'
-                name_col = 'Company' if 'Company' in table.columns else table.columns[0]
-                return [(str(t).strip() + '.L', str(n), 'Various', 'FTSE 100')
-                        for t, n in zip(table[col], table[name_col]) if str(t) != 'nan']
-    except Exception as e:
-        print(f"Fehler FTSE 100: {e}")
+    tables = fetch_wiki_table(url, min_rows=90)
+    for df in tables:
+        sym_col  = find_col(df, ["epic", "ticker", "symbol"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 8:
+                continue
+            sym = sym.replace(".L","") + ".L"
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "FTSE 100"))
+        if len(results) >= 90:
+            return results
     return []
 
-def get_nikkei_tickers():
-    """Nikkei 225 - repräsentative Auswahl"""
-    # Bekannte große japanische Unternehmen mit Yahoo Finance Symbolen
-    return [
-        ('7203.T', 'Toyota Motor', 'Consumer Cyclical', 'Nikkei'),
-        ('6758.T', 'Sony Group', 'Technology', 'Nikkei'),
-        ('9984.T', 'SoftBank Group', 'Technology', 'Nikkei'),
-        ('6501.T', 'Hitachi', 'Industrials', 'Nikkei'),
-        ('9432.T', 'NTT', 'Communication', 'Nikkei'),
-        ('8306.T', 'Mitsubishi UFJ', 'Financial', 'Nikkei'),
-        ('6954.T', 'Fanuc', 'Industrials', 'Nikkei'),
-        ('4063.T', 'Shin-Etsu Chemical', 'Basic Materials', 'Nikkei'),
-        ('7974.T', 'Nintendo', 'Technology', 'Nikkei'),
-        ('6367.T', 'Daikin Industries', 'Industrials', 'Nikkei'),
-        ('4502.T', 'Takeda Pharma', 'Healthcare', 'Nikkei'),
-        ('8035.T', 'Tokyo Electron', 'Technology', 'Nikkei'),
-        ('9983.T', 'Fast Retailing', 'Consumer Cyclical', 'Nikkei'),
-    ]
+def get_cac40():
+    url = "https://en.wikipedia.org/wiki/CAC_40"
+    tables = fetch_wiki_table(url, min_rows=35)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 10:
+                continue
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "CAC 40"))
+        if len(results) >= 35:
+            return results
+    return []
 
-def get_additional_large_caps():
-    """Weitere große internationale Unternehmen"""
-    return [
-        # China / Hong Kong
-        ('0700.HK', 'Tencent Holdings', 'Technology', 'HSI'),
-        ('9988.HK', 'Alibaba Group', 'Technology', 'HSI'),
-        ('3690.HK', 'Meituan', 'Technology', 'HSI'),
-        ('1299.HK', 'AIA Group', 'Financial', 'HSI'),
-        ('0941.HK', 'China Mobile', 'Communication', 'HSI'),
-        # Indien
-        ('RELIANCE.NS', 'Reliance Industries', 'Energy', 'NIFTY'),
-        ('TCS.NS', 'Tata Consultancy', 'Technology', 'NIFTY'),
-        ('HDFCBANK.NS', 'HDFC Bank', 'Financial', 'NIFTY'),
-        ('INFY.NS', 'Infosys', 'Technology', 'NIFTY'),
-        ('ICICIBANK.NS', 'ICICI Bank', 'Financial', 'NIFTY'),
-        # Kanada
-        ('SHOP.TO', 'Shopify', 'Technology', 'TSX'),
-        ('RY.TO', 'Royal Bank of Canada', 'Financial', 'TSX'),
-        ('TD.TO', 'TD Bank', 'Financial', 'TSX'),
-        # Australien
-        ('BHP.AX', 'BHP Group', 'Basic Materials', 'ASX'),
-        ('CBA.AX', 'Commonwealth Bank', 'Financial', 'ASX'),
-        # Schweiz
-        ('NESN.SW', 'Nestlé', 'Consumer Defensive', 'SMI'),
-        ('ROG.SW', 'Roche', 'Healthcare', 'SMI'),
-        ('NOVN.SW', 'Novartis', 'Healthcare', 'SMI'),
-        ('ABBN.SW', 'ABB', 'Industrials', 'SMI'),
-        # Niederlande
-        ('ASML.AS', 'ASML Holding', 'Technology', 'AEX'),
-        ('INGA.AS', 'ING Group', 'Financial', 'AEX'),
-        # Frankreich (EURONEXT)
-        ('MC.PA', 'LVMH', 'Consumer Cyclical', 'CAC 40'),
-        ('OR.PA', "L'Oréal", 'Consumer Defensive', 'CAC 40'),
-        ('SAN.PA', 'Sanofi', 'Healthcare', 'CAC 40'),
-        ('TTE.PA', 'TotalEnergies', 'Energy', 'CAC 40'),
-        ('AIR.PA', 'Airbus', 'Industrials', 'CAC 40'),
-        # Spanien
-        ('SAN.MC', 'Banco Santander', 'Financial', 'IBEX 35'),
-        ('IBE.MC', 'Iberdrola', 'Utilities', 'IBEX 35'),
-        # Dänemark
-        ('NOVO-B.CO', 'Novo Nordisk', 'Healthcare', 'OMXC'),
-    ]
+def get_ibex35():
+    url = "https://en.wikipedia.org/wiki/IBEX_35"
+    tables = fetch_wiki_table(url, min_rows=30)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 10:
+                continue
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "IBEX 35"))
+        if len(results) >= 25:
+            return results
+    return []
 
+def get_aex():
+    url = "https://en.wikipedia.org/wiki/AEX_index"
+    tables = fetch_wiki_table(url, min_rows=20)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 10:
+                continue
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "AEX"))
+        if len(results) >= 20:
+            return results
+    return []
+
+def get_smi():
+    url = "https://en.wikipedia.org/wiki/Swiss_Market_Index"
+    tables = fetch_wiki_table(url, min_rows=15)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 12:
+                continue
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "SMI"))
+        if len(results) >= 15:
+            return results
+    return []
+
+def get_nikkei225():
+    url = "https://en.wikipedia.org/wiki/Nikkei_225"
+    tables = fetch_wiki_table(url, min_rows=100)
+    for df in tables:
+        # Nikkei hat oft Zahlen-Codes
+        sym_col  = find_col(df, ["code", "ticker", "symbol"])
+        name_col = find_col(df, ["company", "name", "english"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or not sym.isdigit():
+                continue
+            sym = sym + ".T"
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "Nikkei"))
+        if len(results) >= 100:
+            return results
+    return []
+
+def get_asx200():
+    url = "https://en.wikipedia.org/wiki/S%26P/ASX_200"
+    tables = fetch_wiki_table(url, min_rows=100)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol", "code"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 8:
+                continue
+            sym = sym.replace(".AX","") + ".AX"
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "ASX"))
+        if len(results) >= 100:
+            return results
+    return []
+
+def get_tsx60():
+    url = "https://en.wikipedia.org/wiki/S%26P/TSX_60"
+    tables = fetch_wiki_table(url, min_rows=50)
+    for df in tables:
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 10:
+                continue
+            sym = sym.replace(".TO","") + ".TO"
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "TSX"))
+        if len(results) >= 50:
+            return results
+    return []
+
+def get_nifty50():
+    url = "https://en.wikipedia.org/wiki/NIFTY_50"
+    tables = fetch_wiki_table(url, min_rows=40)
+    for df in tables:
+        sym_col  = find_col(df, ["symbol", "ticker", "nse"])
+        name_col = find_col(df, ["company", "name"])
+        if not sym_col:
+            continue
+        results = []
+        for _, row in df.iterrows():
+            sym = str(row[sym_col]).strip()
+            if sym in ("nan", "") or len(sym) > 20:
+                continue
+            sym = sym.replace(".NS","") + ".NS"
+            name = str(row[name_col]).strip() if name_col else sym
+            results.append((sym, name, "", "NIFTY"))
+        if len(results) >= 40:
+            return results
+    return []
+
+def get_hang_seng():
+    """Hang Seng – feste Liste da Wikipedia-Tabelle unzuverlässig"""
+    return [
+        ("0700.HK", "Tencent Holdings",    "", "HSI"),
+        ("9988.HK", "Alibaba Group",        "", "HSI"),
+        ("0005.HK", "HSBC Holdings",        "", "HSI"),
+        ("1299.HK", "AIA Group",            "", "HSI"),
+        ("0941.HK", "China Mobile",         "", "HSI"),
+        ("3690.HK", "Meituan",              "", "HSI"),
+        ("0388.HK", "HK Exchanges",         "", "HSI"),
+        ("2318.HK", "Ping An Insurance",    "", "HSI"),
+        ("1810.HK", "Xiaomi",               "", "HSI"),
+        ("9999.HK", "NetEase",              "", "HSI"),
+        ("0883.HK", "CNOOC",                "", "HSI"),
+        ("2382.HK", "Sunny Optical",        "", "HSI"),
+        ("0011.HK", "Hang Seng Bank",       "", "HSI"),
+        ("1177.HK", "Sino Biopharmaceutical","", "HSI"),
+        ("6098.HK", "Country Garden Services","","HSI"),
+    ]
 
 # ─────────────────────────────────────────────
 #  BEWERTUNGSFUNKTIONEN
 # ─────────────────────────────────────────────
 
 def is_tech(sector):
-    return sector and 'tech' in sector.lower()
+    return sector and "tech" in sector.lower()
 
 def is_financial(sector):
-    fin_keywords = ['bank', 'financial', 'insurance', 'real estate', 'reit']
-    return sector and any(k in sector.lower() for k in fin_keywords)
+    return sector and any(k in sector.lower() for k in ["bank","financial","insurance","real estate","reit"])
 
 def score_roe(roe, sector):
-    """Eigenkapitalrentabilität"""
-    if roe is None: return 0, None
-    roe_pct = roe * 100
-    if roe_pct > 15: return 1, roe_pct
-    elif roe_pct >= 10: return 0, roe_pct
-    else: return -1, roe_pct
+    if roe is None: return 0
+    p = roe * 100
+    return 1 if p > 15 else (-1 if p < 10 else 0)
 
-def score_equity_ratio(equity_ratio_pct, sector):
-    """Eigenkapitalquote (branchenabhängig)"""
-    if equity_ratio_pct is None: return 0, None
-    if is_tech(sector):
-        if equity_ratio_pct > 45: return 1, equity_ratio_pct
-        elif equity_ratio_pct >= 30: return 0, equity_ratio_pct
-        else: return -1, equity_ratio_pct
-    elif is_financial(sector):
-        if equity_ratio_pct > 10: return 1, equity_ratio_pct
-        elif equity_ratio_pct >= 5: return 0, equity_ratio_pct
-        else: return -1, equity_ratio_pct
-    else:
-        if equity_ratio_pct > 25: return 1, equity_ratio_pct
-        elif equity_ratio_pct >= 15: return 0, equity_ratio_pct
-        else: return -1, equity_ratio_pct
+def score_equity_ratio(eq, sector):
+    if eq is None: return 0
+    thr = (45, 30) if is_tech(sector) else (10, 5) if is_financial(sector) else (25, 15)
+    return 1 if eq > thr[0] else (-1 if eq < thr[1] else 0)
 
-def score_ebit_margin(ebit_margin, sector):
-    """Gewinnmarge (EBIT)"""
-    if ebit_margin is None or is_financial(sector): return 0, ebit_margin
-    margin_pct = ebit_margin * 100
-    if margin_pct > 12: return 1, margin_pct
-    elif margin_pct >= 6: return 0, margin_pct
-    else: return -1, margin_pct
+def score_ebit(margin, sector):
+    if margin is None or is_financial(sector): return 0
+    p = margin * 100
+    return 1 if p > 12 else (-1 if p < 6 else 0)
 
-def score_pe_current(pe, sector):
-    """Aktuelles KGV"""
-    if pe is None or pe < 0: return -1, pe
-    if is_tech(sector):
-        if pe < 22: return 1, pe
-        elif pe <= 33: return 0, pe
-        else: return -1, pe
-    else:
-        if pe < 12: return 1, pe
-        elif pe <= 16: return 0, pe
-        else: return -1, pe
+def score_pe(pe, sector):
+    if pe is None or pe < 0: return -1
+    thr = (22, 33) if is_tech(sector) else (12, 16)
+    return 1 if pe < thr[0] else (-1 if pe > thr[1] else 0)
 
-def score_pe_5y(pe_5y, sector):
-    """Durchschnittliches KGV (5 Jahre, Näherung)"""
-    # Gleiche Logik wie aktuelles KGV
-    return score_pe_current(pe_5y, sector)
-
-def score_price_vs_index_6m(stock_6m, index_6m):
-    """Kursveränderung 6 Monate vs. Index"""
-    if stock_6m is None or index_6m is None: return 0, None
-    diff = stock_6m - index_6m
-    if diff > 5: return 1, diff
-    elif diff >= -5: return 0, diff
-    else: return -1, diff
-
-def score_price_vs_index_12m(stock_12m, index_12m):
-    """Kursveränderung 12 Monate vs. Index"""
-    if stock_12m is None or index_12m is None: return 0, None
-    diff = stock_12m - index_12m
-    if diff > 5: return 1, diff
-    elif diff >= -5: return 0, diff
-    else: return -1, diff
-
-def score_momentum(score_6m, score_12m):
-    """Kursmomentum"""
-    if score_6m == 1 and score_12m in (0, -1): return 1
-    elif score_6m == -1 and score_12m in (0, 1): return -1
-    else: return 0
-
-def score_earnings_growth(growth):
-    """Erwartetes Gewinnwachstum"""
-    if growth is None: return 0, None
-    growth_pct = growth * 100
-    if growth_pct > 5: return 1, growth_pct
-    elif growth_pct >= -5: return 0, growth_pct
-    else: return -1, growth_pct
-
-def score_earnings_revision(rev):
-    """Veränderung der Gewinnschätzung (Näherung über analyst target)"""
-    if rev is None: return 0, None
-    if rev > 0.05: return 1, rev * 100
-    elif rev >= -0.05: return 0, rev * 100
-    else: return -1, rev * 100
-
-def score_quarterly_reaction(reaction):
-    """Reaktion auf Quartalszahlen (Näherung)"""
-    if reaction is None: return 0, None
-    if reaction > 1: return 1, reaction
-    elif reaction >= -1: return 0, reaction
-    else: return -1, reaction
+def score_growth(g):
+    if g is None: return 0
+    p = g * 100
+    return 1 if p > 5 else (-1 if p < -5 else 0)
 
 def score_pbv(pbv, sector):
-    """Kurs-Buchwert-Verhältnis"""
-    if pbv is None or is_tech(sector): return 0, pbv
-    if pbv < 1.5: return 1, pbv
-    elif pbv <= 2.5: return 0, pbv
-    else: return -1, pbv
+    if pbv is None or is_tech(sector): return 0
+    return 1 if pbv < 1.5 else (-1 if pbv > 2.5 else 0)
 
-def abstand(current_price, high_52w):
-    """Abstand = prozentuale Differenz Kurs zu 52-Wochen-Hoch"""
-    if current_price is None or high_52w is None or high_52w == 0:
-        return None
-    return ((high_52w - current_price) / high_52w) * 100
-
-def get_price_change_pct(ticker_obj, months):
-    """Berechnet Kursveränderung der letzten N Monate"""
+def price_change(ticker_obj, months):
     try:
-        end = datetime.now()
-        start = end - timedelta(days=months * 30)
-        hist = ticker_obj.history(start=start, end=end)
-        if len(hist) < 2:
-            return None
-        first = hist['Close'].iloc[0]
-        last = hist['Close'].iloc[-1]
-        return ((last - first) / first) * 100
+        end   = datetime.now()
+        start = end - timedelta(days=months * 31)
+        hist  = ticker_obj.history(start=start, end=end)
+        if len(hist) < 5: return None
+        return ((hist["Close"].iloc[-1] - hist["Close"].iloc[0]) / hist["Close"].iloc[0]) * 100
     except:
         return None
 
-# Näherungswerte für Marktindizes (werden bei jedem Skriptlauf aktualisiert)
-INDEX_CHANGES = {}
-
-def get_index_change(index_symbol, months):
-    """Holt Indexveränderung"""
-    key = f"{index_symbol}_{months}"
-    if key in INDEX_CHANGES:
-        return INDEX_CHANGES[key]
-    try:
-        idx = yf.Ticker(index_symbol)
-        chg = get_price_change_pct(idx, months)
-        INDEX_CHANGES[key] = chg
-        return chg
-    except:
-        return None
-
-INDEX_MAP = {
-    'S&P 500': '^GSPC',
-    'NASDAQ 100': '^NDX',
-    'DAX': '^GDAXI',
-    'EURO STOXX 50': '^STOXX50E',
-    'FTSE 100': '^FTSE',
-    'Nikkei': '^N225',
-    'HSI': '^HSI',
-    'NIFTY': '^NSEI',
-    'TSX': '^GSPTSE',
-    'ASX': '^AXJO',
-    'SMI': '^SSMI',
-    'AEX': '^AEX',
-    'CAC 40': '^FCHI',
-    'IBEX 35': '^IBEX',
-    'OMXC': '^OMXC25',
-    'CDAX': '^CDAX',
-    'MDAX': '^MDAXI',
+INDEX_CACHE = {}
+INDEX_MAP   = {
+    "S&P 500": "^GSPC", "NASDAQ 100": "^NDX", "DAX": "^GDAXI",
+    "MDAX": "^MDAXI", "EURO STOXX 50": "^STOXX50E", "FTSE 100": "^FTSE",
+    "CAC 40": "^FCHI", "IBEX 35": "^IBEX", "AEX": "^AEX", "SMI": "^SSMI",
+    "Nikkei": "^N225", "ASX": "^AXJO", "TSX": "^GSPTSE",
+    "NIFTY": "^NSEI", "HSI": "^HSI",
 }
 
+def idx_change(exchange, months):
+    key = f"{exchange}_{months}"
+    if key not in INDEX_CACHE:
+        sym = INDEX_MAP.get(exchange, "^GSPC")
+        try:
+            INDEX_CACHE[key] = price_change(yf.Ticker(sym), months)
+        except:
+            INDEX_CACHE[key] = None
+    return INDEX_CACHE[key]
+
+def abstand(price, high52):
+    if not price or not high52 or high52 == 0: return None
+    return round(((high52 - price) / high52) * 100, 2)
 
 # ─────────────────────────────────────────────
-#  HAUPT-FUNKTION: EINZELNE AKTIE VERARBEITEN
+#  EINZELNE AKTIE VERARBEITEN
 # ─────────────────────────────────────────────
 
-def process_ticker(symbol, name, sector, exchange):
-    """Holt Daten und berechnet Rating für eine Aktie"""
+def process(symbol, name, sector, exchange):
     try:
-        t = yf.Ticker(symbol)
+        t    = yf.Ticker(symbol)
         info = t.info
-
-        if not info or 'currentPrice' not in info and 'regularMarketPrice' not in info:
+        if not info:
             return None
 
-        current_price = info.get('currentPrice') or info.get('regularMarketPrice')
-        if not current_price:
+        price = info.get("currentPrice") or info.get("regularMarketPrice")
+        if not price:
             return None
 
-        # Basisdaten
-        sector_actual = info.get('sector', sector)
-        name_actual = info.get('shortName') or info.get('longName') or name
-        currency = info.get('currency', 'USD')
-        market_cap = info.get('marketCap')
-        high_52w = info.get('fiftyTwoWeekHigh')
-        ex = info.get('exchange') or exchange
+        sector_a  = info.get("sector", sector) or sector
+        name_a    = info.get("shortName") or info.get("longName") or name
+        currency  = info.get("currency", "USD")
+        mktcap    = info.get("marketCap")
+        high52    = info.get("fiftyTwoWeekHigh")
 
         # Finanzkennzahlen
-        roe = info.get('returnOnEquity')
-        total_equity = info.get('totalStockholderEquity') or info.get('bookValue')
-        total_assets = info.get('totalAssets')
-        equity_ratio = None
-        if total_equity and total_assets and total_assets > 0:
-            equity_ratio = (total_equity / total_assets) * 100
+        roe       = info.get("returnOnEquity")
+        t_equity  = info.get("totalStockholderEquity") or info.get("bookValue", 0)
+        t_assets  = info.get("totalAssets")
+        eq_ratio  = round((t_equity / t_assets) * 100, 2) if t_equity and t_assets and t_assets > 0 else None
+        ebit_m    = info.get("ebitdaMargins")
+        pe        = info.get("trailingPE") or info.get("forwardPE")
+        pe_fwd    = info.get("forwardPE")
+        pbv       = info.get("priceToBook")
+        growth    = info.get("earningsGrowth") or info.get("revenueGrowth")
 
-        ebit_margin = info.get('ebitdaMargins')  # Näherung
-        pe_current = info.get('trailingPE') or info.get('forwardPE')
-        pe_forward = info.get('forwardPE')
-        pbv = info.get('priceToBook')
-        earnings_growth = info.get('earningsGrowth') or info.get('revenueGrowth')
+        # Kursentwicklung vs. Index
+        c6  = price_change(t, 6)
+        c12 = price_change(t, 12)
+        i6  = idx_change(exchange, 6)
+        i12 = idx_change(exchange, 12)
 
-        # Kursveränderungen
-        idx_sym = INDEX_MAP.get(exchange, '^GSPC')
-        change_6m = get_price_change_pct(t, 6)
-        change_12m = get_price_change_pct(t, 12)
-        idx_6m = get_index_change(idx_sym, 6)
-        idx_12m = get_index_change(idx_sym, 12)
+        diff6  = (c6  - i6 ) if c6  is not None and i6  is not None else None
+        diff12 = (c12 - i12) if c12 is not None and i12 is not None else None
 
-        # Bewertung der 12 Kennzahlen
-        s_roe, v_roe = score_roe(roe, sector_actual)
-        s_eq, v_eq = score_equity_ratio(equity_ratio, sector_actual)
-        s_ebit, v_ebit = score_ebit_margin(ebit_margin, sector_actual)
-        s_pe, v_pe = score_pe_current(pe_current, sector_actual)
-        s_pe5, v_pe5 = score_pe_5y(pe_forward, sector_actual)  # Näherung
-        s_6m, v_6m = score_price_vs_index_6m(change_6m, idx_6m)
-        s_12m, v_12m = score_price_vs_index_12m(change_12m, idx_12m)
-        s_mom = score_momentum(s_6m, s_12m)
-        s_grow, v_grow = score_earnings_growth(earnings_growth)
-        s_rev, v_rev = score_earnings_revision(earnings_growth)  # Näherung
-        s_qtr = 0   # Quartalszahlen-Reaktion: Datenpunkt nicht frei verfügbar
-        s_pbv, v_pbv = score_pbv(pbv, sector_actual)
+        s_roe  = score_roe(roe, sector_a)
+        s_eq   = score_equity_ratio(eq_ratio, sector_a)
+        s_ebit = score_ebit(ebit_m, sector_a)
+        s_pe   = score_pe(pe, sector_a)
+        s_pe5  = score_pe(pe_fwd, sector_a)
+        s_6m   = (1 if diff6  >  5 else -1 if diff6  < -5 else 0) if diff6  is not None else 0
+        s_12m  = (1 if diff12 >  5 else -1 if diff12 < -5 else 0) if diff12 is not None else 0
+        s_mom  = (1 if s_6m == 1 and s_12m <= 0 else -1 if s_6m == -1 and s_12m >= 0 else 0)
+        s_grow = score_growth(growth)
+        s_rev  = score_growth(growth)   # Näherung
+        s_qtr  = 0
+        s_pbv  = score_pbv(pbv, sector_a)
 
-        total_score = s_roe + s_eq + s_ebit + s_pe + s_pe5 + s_6m + s_12m + s_mom + s_grow + s_rev + s_qtr + s_pbv
+        total = s_roe + s_eq + s_ebit + s_pe + s_pe5 + s_6m + s_12m + s_mom + s_grow + s_rev + s_qtr + s_pbv
 
-        # Kaufempfehlung
-        is_large_cap = (market_cap or 0) >= 10_000_000_000
-        buy_threshold = 4 if is_large_cap else 6
-        if total_score >= buy_threshold:
-            recommendation = "buy"
-        elif total_score >= 0:
-            recommendation = "watch"
-        else:
-            recommendation = "sell"
+        large = (mktcap or 0) >= 10_000_000_000
+        rec   = "buy" if total >= (4 if large else 6) else "sell" if total < 0 else "watch"
 
-        ab = abstand(current_price, high_52w)
+        def rv(v, d=2): return round(v, d) if v is not None else None
 
         return {
-            "symbol": symbol,
-            "name": name_actual,
-            "sector": sector_actual,
-            "exchange": exchange,
-            "currency": currency,
-            "price": round(current_price, 2) if current_price else None,
-            "marketCap": market_cap,
-            "high52w": round(high_52w, 2) if high_52w else None,
-            "abstand": round(ab, 2) if ab is not None else None,
-            "rating": total_score,
-            "recommendation": recommendation,
+            "symbol":     symbol,
+            "name":       name_a,
+            "sector":     sector_a,
+            "exchange":   exchange,
+            "currency":   currency,
+            "price":      rv(price),
+            "marketCap":  mktcap,
+            "high52w":    rv(high52),
+            "abstand":    abstand(price, high52),
+            "rating":     total,
+            "recommendation": rec,
             "details": {
-                "eigenkapitalrentabilitaet": {"score": s_roe, "value": round(v_roe, 2) if v_roe else None, "unit": "%"},
-                "eigenkapitalquote": {"score": s_eq, "value": round(v_eq, 2) if v_eq else None, "unit": "%"},
-                "ebitMarge": {"score": s_ebit, "value": round(v_ebit, 2) if v_ebit else None, "unit": "%"},
-                "kgvAktuell": {"score": s_pe, "value": round(v_pe, 2) if v_pe else None, "unit": ""},
-                "kgv5Jahre": {"score": s_pe5, "value": round(v_pe5, 2) if v_pe5 else None, "unit": ""},
-                "kursVs6M": {"score": s_6m, "value": round(v_6m, 2) if v_6m else None, "unit": "%"},
-                "kursVs12M": {"score": s_12m, "value": round(v_12m, 2) if v_12m else None, "unit": "%"},
-                "momentum": {"score": s_mom, "value": None, "unit": ""},
-                "gewinnwachstum": {"score": s_grow, "value": round(v_grow, 2) if v_grow else None, "unit": "%"},
-                "gewinnrevision": {"score": s_rev, "value": round(v_rev, 2) if v_rev else None, "unit": "%"},
-                "quartalszahlen": {"score": s_qtr, "value": None, "unit": "%"},
-                "kbv": {"score": s_pbv, "value": round(v_pbv, 2) if v_pbv else None, "unit": ""},
+                "eigenkapitalrentabilitaet": {"score": s_roe,  "value": rv(roe*100)  if roe  else None, "unit": "%"},
+                "eigenkapitalquote":         {"score": s_eq,   "value": eq_ratio,                        "unit": "%"},
+                "ebitMarge":                 {"score": s_ebit, "value": rv(ebit_m*100) if ebit_m else None, "unit": "%"},
+                "kgvAktuell":                {"score": s_pe,   "value": rv(pe),                           "unit": ""},
+                "kgv5Jahre":                 {"score": s_pe5,  "value": rv(pe_fwd),                       "unit": ""},
+                "kursVs6M":                  {"score": s_6m,   "value": rv(diff6),                        "unit": "%"},
+                "kursVs12M":                 {"score": s_12m,  "value": rv(diff12),                       "unit": "%"},
+                "momentum":                  {"score": s_mom,  "value": None,                             "unit": ""},
+                "gewinnwachstum":            {"score": s_grow, "value": rv(growth*100) if growth else None, "unit": "%"},
+                "gewinnrevision":            {"score": s_rev,  "value": rv(growth*100) if growth else None, "unit": "%"},
+                "quartalszahlen":            {"score": 0,      "value": None,                             "unit": "%"},
+                "kbv":                       {"score": s_pbv,  "value": rv(pbv),                          "unit": ""},
             },
             "updatedAt": datetime.now().isoformat()
         }
-
     except Exception as e:
-        print(f"  FEHLER {symbol}: {e}")
+        print(f"FEHLER {symbol}: {e}")
         return None
-
 
 # ─────────────────────────────────────────────
 #  HAUPTPROGRAMM
@@ -462,89 +538,95 @@ def main():
     print("  StockRater – Datenbeschaffung")
     print("=" * 60)
 
-    # Aktienlisten zusammenstellen
-    print("\n[1/3] Aktienlisten laden...")
-    all_stocks = []
-    seen = set()
-
+    print("\n[1/3] Aktienlisten von Wikipedia laden...")
     sources = [
-        ("S&P 500", get_sp500_tickers),
-        ("NASDAQ 100", get_nasdaq100_tickers),
-        ("DAX", get_dax_tickers),
-        ("EURO STOXX 50", get_stoxx50_tickers),
-        ("FTSE 100", get_ftse100_tickers),
-        ("Nikkei", get_nikkei_tickers),
-        ("International", get_additional_large_caps),
+        ("S&P 500",       get_sp500),
+        ("NASDAQ 100",    get_nasdaq100),
+        ("DAX",           get_dax),
+        ("MDAX",          get_mdax),
+        ("EURO STOXX 50", get_stoxx50),
+        ("FTSE 100",      get_ftse100),
+        ("CAC 40",        get_cac40),
+        ("IBEX 35",       get_ibex35),
+        ("AEX",           get_aex),
+        ("SMI",           get_smi),
+        ("Nikkei 225",    get_nikkei225),
+        ("ASX 200",       get_asx200),
+        ("TSX 60",        get_tsx60),
+        ("NIFTY 50",      get_nifty50),
+        ("Hang Seng",     get_hang_seng),
     ]
 
-    for source_name, func in sources:
+    all_stocks, seen = [], set()
+    for label, fn in sources:
         try:
-            tickers = func()
+            rows = fn()
             added = 0
-            for ticker_data in tickers:
-                sym = ticker_data[0]
+            for row in rows:
+                sym = row[0]
                 if sym not in seen:
                     seen.add(sym)
-                    all_stocks.append(ticker_data)
+                    all_stocks.append(row)
                     added += 1
-            print(f"  ✓ {source_name}: {added} Aktien")
+            status = "✓" if added > 0 else "✗"
+            print(f"  {status} {label}: {added} Aktien")
         except Exception as e:
-            print(f"  ✗ {source_name}: {e}")
+            print(f"  ✗ {label}: {e}")
 
-    print(f"\n  Gesamt: {len(all_stocks)} eindeutige Symbole")
+    total_list = len(all_stocks)
+    print(f"\n  Gesamt: {total_list} eindeutige Symbole")
 
-    # Auf MAX_STOCKS begrenzen
-    if len(all_stocks) > MAX_STOCKS:
+    if total_list == 0:
+        print("FEHLER: Keine Symbole geladen. Abbruch.")
+        return
+
+    if total_list > MAX_STOCKS:
         all_stocks = all_stocks[:MAX_STOCKS]
 
-    # Daten von yfinance holen
+    # ── Finanzdaten von Yahoo Finance ──
     print(f"\n[2/3] Finanzdaten abrufen ({len(all_stocks)} Aktien)...")
-    print("  (Dies kann einige Minuten dauern...)\n")
+    print("  (Kann 20–90 Minuten dauern je nach Anzahl)\n")
 
-    results = []
-    errors = 0
-
+    results, errors = [], 0
     for i, (symbol, name, sector, exchange) in enumerate(all_stocks):
-        print(f"  [{i+1}/{len(all_stocks)}] {symbol} – {name[:40]}", end=" ")
-        stock_data = process_ticker(symbol, name, sector, exchange)
-        if stock_data:
-            results.append(stock_data)
-            rec_icon = {"buy": "✓", "watch": "~", "sell": "✗"}.get(stock_data['recommendation'], '?')
-            print(f"→ Rating: {stock_data['rating']:+d} {rec_icon}")
+        print(f"  [{i+1}/{len(all_stocks)}] {symbol:<15} {name[:35]:<35}", end=" ")
+        data = process(symbol, name, sector, exchange)
+        if data:
+            results.append(data)
+            icon = {"buy": "✓", "watch": "~", "sell": "✗"}.get(data["recommendation"], "?")
+            print(f"→ {data['rating']:+3d} {icon}")
         else:
             errors += 1
-            print("→ übersprungen")
-        time.sleep(DELAY_BETWEEN_REQUESTS)
+            print("→ –")
+        time.sleep(DELAY)
 
-    # Sortieren nach Rating (absteigend)
-    results.sort(key=lambda x: x['rating'], reverse=True)
+    results.sort(key=lambda x: x["rating"], reverse=True)
 
-    # JSON speichern
+    # ── Speichern ──
     print(f"\n[3/3] Speichern als {OUTPUT_FILE}...")
-    import os
-    os.makedirs("docs", exist_ok=True)
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 
     output = {
         "metadata": {
-            "count": len(results),
+            "count":     len(results),
             "updatedAt": datetime.now().isoformat(),
-            "errors": errors,
-            "version": "1.0"
+            "errors":    errors,
+            "version":   "2.0"
         },
         "stocks": results
     }
 
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    print(f"\n  ✓ {len(results)} Aktien gespeichert")
-    print(f"  ✗ {errors} Fehler")
-    print(f"\n  Kaufempfehlungen: {sum(1 for r in results if r['recommendation'] == 'buy')}")
-    print(f"  Beobachten:      {sum(1 for r in results if r['recommendation'] == 'watch')}")
-    print(f"  Verkaufen:       {sum(1 for r in results if r['recommendation'] == 'sell')}")
-    print(f"\n✅ Fertig! Kopiere '{OUTPUT_FILE}' in deinen GitHub Pages Ordner.")
-    print("=" * 60)
+    buy   = sum(1 for r in results if r["recommendation"] == "buy")
+    watch = sum(1 for r in results if r["recommendation"] == "watch")
+    sell  = sum(1 for r in results if r["recommendation"] == "sell")
 
+    print(f"\n  ✓ {len(results)} Aktien gespeichert  ({errors} Fehler)")
+    print(f"  Kauf: {buy}  |  Beobachten: {watch}  |  Verkauf: {sell}")
+    print(f"\n✅ Fertig!")
+    print("=" * 60)
 
 if __name__ == "__main__":
     main()
