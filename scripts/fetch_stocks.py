@@ -29,6 +29,7 @@ MAX_STOCKS          = 10000
 DELAY               = 0.4   # Sekunden zwischen Yahoo-Anfragen
 OUTPUT_FILE         = "docs/stocks.json"
 HEADERS             = {"User-Agent": "Mozilla/5.0 (compatible; StockRater/1.0)"}
+FX_CACHE = {}
 
 # ─────────────────────────────────────────────
 #  HILFSFUNKTION: Wikipedia-Tabelle robust lesen
@@ -631,3 +632,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def fx_rate(currency):
+    if not currency or currency == "EUR":
+        return 1
+    if currency in FX_CACHE:
+        return FX_CACHE[currency]
+    try:
+        data = requests.get(f"https://open.er-api.com/v6/latest/{currency}", timeout=20).json()
+        rate = data["rates"]["EUR"]
+    except Exception:
+        rate = 1
+    FX_CACHE[currency] = rate
+    return rate
