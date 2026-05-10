@@ -2,8 +2,8 @@ name: Aktien-Daten aktualisieren
 
 on:
   schedule:
-    - cron: '0 20 * * 1-5'   # Mo–Fr um 21:00 Uhr (nach Börsenschluss Europa)
-  workflow_dispatch:           # Manuell ausführbar per Knopfdruck
+    - cron: '0 20 * * 1-5'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,10 +14,16 @@ env:
 jobs:
   update:
     runs-on: ubuntu-latest
+    # Verhindert parallele Ausführung
+    concurrency:
+      group: update-stocks
+      cancel-in-progress: false
 
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # Komplette Historie holen
 
       - name: Python einrichten
         uses: actions/setup-python@v5
@@ -34,7 +40,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           git add docs/stocks.json
           git diff --staged --quiet || git commit -m "Daten: $(date '+%d.%m.%Y %H:%M')"
-          git pull --rebase origin main
           git push
