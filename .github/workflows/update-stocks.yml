@@ -2,7 +2,7 @@ name: Aktien-Daten aktualisieren
 
 on:
   schedule:
-    - cron: '0 20 * * 1-5'
+    - cron: '30 22 * * 1-5'
   workflow_dispatch:
 
 permissions:
