@@ -20,6 +20,7 @@ import requests
 import os
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
+from io import StringIO
 
 # ─────────────────────────────────────────────
 #  KONFIGURATION
@@ -41,7 +42,7 @@ def fetch_wiki_table(url, min_rows=10):
     try:
         r = requests.get(url, headers=HEADERS, timeout=15)
         r.raise_for_status()
-        tables = pd.read_html(r.text, flavor="lxml")
+        tables = pd.read_html(StringIO(r.text), flavor="lxml")
         return [t for t in tables if len(t) >= min_rows]
     except Exception as e:
         print(f"    Wiki-Fehler ({url}): {e}")
