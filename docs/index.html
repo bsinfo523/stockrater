@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockRater – Aktienbewertung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ───────── RESET & TOKENS ───────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0f14;
+      --surface:   #141820;
+      --card:      #1a2030;
+      --card-h:    #1f2840;
+      --border:    #252d3d;
+      --border-l:  #2e3a50;
+      --teal:      #2a9fa8;
+      --teal-l:    #34c4ce;
+      --teal-d:    #1a7880;
+      --gold:      #c9a84c;
+      --buy:       #4caf82;
+      --buy-bg:    #0e2b1f;
+      --watch:     #c9a84c;
+      --watch-bg:  #2a2010;
+      --sell:      #e05252;
+      --sell-bg:   #2b0e0e;
+      --text:      #e8ecf4;
+      --text-m:    #8b95a8;
+      --text-s:    #5a6478;
+      --radius:    12px;
+      --radius-s:  8px;
+      --shadow:    0 4px 24px rgba(0,0,0,.4);
+      --shadow-l:  0 8px 40px rgba(0,0,0,.6);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ───────── HEADER ───────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,15,20,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      letter-spacing: -.5px;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+    .logo span { color: var(--teal); }
+
+    .header-stats {
+      display: flex;
+      gap: 12px;
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--text-m);
+      flex-shrink: 0;
+    }
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+    .stat-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .stat-dot.buy   { background: var(--buy); }
+    .stat-dot.watch { background: var(--watch); }
+    .stat-dot.sell  { background: var(--sell); }
+
+    .updated-time {
+      font-size: 11px;
+      color: var(--text-s);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ───────── TOOLBAR ───────── */
+    .toolbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-s);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px 10px 38px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-input:focus { border-color: var(--teal); }
+    .search-input::placeholder { color: var(--text-s); }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-m);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--teal); color: var(--teal); background: rgba(42,159,168,.06); }
+    .btn.active { border-color: var(--teal); color: var(--teal); background: rgba(42,159,168,.1); }
+
+    .btn-watchlist.has-items {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,168,76,.08);
+    }
+
+    /* ───────── FILTER PILLS ───────── */
+    .filter-row {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-label { font-size: 12px; color: var(--text-s); }
+
+    .pill {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-m);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .pill:hover { border-color: var(--border-l); color: var(--text); }
+    .pill.active { border-color: var(--teal); color: var(--teal); background: rgba(42,159,168,.1); }
+    .pill.buy-pill.active   { border-color: var(--buy); color: var(--buy); background: rgba(76,175,130,.1); }
+    .pill.watch-pill.active { border-color: var(--watch); color: var(--watch); background: rgba(201,168,76,.1); }
+    .pill.sell-pill.active  { border-color: var(--sell); color: var(--sell); background: rgba(224,82,82,.1); }
+
+    /* ───────── RESULTS COUNT ───────── */
+    .results-info {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 10px;
+      font-size: 13px;
+      color: var(--text-s);
+    }
+    .results-info strong { color: var(--text-m); }
+
+    /* ───────── STOCK LIST ───────── */
+    .stock-list {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stock-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto auto auto;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative;
+    }
+    .stock-card:hover {
+      border-color: var(--border-l);
+      background: var(--card-h);
+      transform: translateX(2px);
+    }
+    .stock-card.buy   { border-left: 3px solid var(--buy); }
+    .stock-card.watch { border-left: 3px solid var(--watch); }
+    .stock-card.sell  { border-left: 3px solid var(--sell); }
+
+    /* Rating badge */
+    .rating-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .rating-badge:hover { transform: scale(1.1); box-shadow: 0 0 12px currentColor; }
+    .rating-badge.buy   { background: var(--buy-bg);   color: var(--buy);   border: 2px solid var(--buy);   }
+    .rating-badge.watch { background: var(--watch-bg); color: var(--watch); border: 2px solid var(--watch); }
+    .rating-badge.sell  { background: var(--sell-bg);  color: var(--sell);  border: 2px solid var(--sell);  }
+
+    .badge-arrow {
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      font-size: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .badge-arrow.buy   { background: var(--buy); }
+    .badge-arrow.watch { background: var(--watch); }
+    .badge-arrow.sell  { background: var(--sell); }
+
+    /* Stock info */
+    .stock-info { min-width: 0; }
+    .stock-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .stock-meta {
+      display: flex;
+      gap: 8px;
+      margin-top: 3px;
+      align-items: center;
+    }
+    .stock-symbol {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--teal);
+      background: rgba(42,159,168,.1);
+      padding: 1px 7px;
+      border-radius: 4px;
+    }
+    .stock-exchange, .stock-sector {
+      font-size: 12px;
+      color: var(--text-s);
+    }
+
+    /* Metrics */
+    .metric {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .metric-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-s);
+      margin-top: 1px;
+    }
+    .metric-value.positive { color: var(--buy); }
+    .metric-value.negative { color: var(--sell); }
+
+    /* Watchlist button */
+    .watchlist-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-s);
+      padding: 6px;
+      border-radius: 6px;
+      transition: all .2s;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+    .watchlist-btn:hover { color: var(--gold); }
+    .watchlist-btn.starred { color: var(--gold); }
+
+    /* ───────── SORT MODAL ───────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border-l);
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 24px;
+      width: 100%;
+      max-width: 520px;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0);   opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+    }
+    .modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-m); font-size: 22px; line-height: 1;
+      transition: color .2s;
+    }
+    .modal-close:hover { color: var(--text); }
+
+    .sort-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .sort-option:last-of-type { border-bottom: none; }
+    .sort-option:hover { color: var(--teal); }
+
+    .sort-radio {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border-l);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s;
+    }
+    .sort-option.selected .sort-radio {
+      border-color: var(--teal);
+    }
+    .sort-option.selected .sort-radio::after {
+      content: '';
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+    .sort-option.selected { color: var(--teal); }
+
+    .modal-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: none;
+      background: var(--teal);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .modal-btn:hover { background: var(--teal-l); }
+
+    /* ───────── DETAIL PANEL ───────── */
+    .detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 300;
+    }
+    .detail-overlay.open { display: block; }
+
+    .detail-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(480px, 100vw);
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--border-l);
+      overflow-y: auto;
+      z-index: 301;
+      transform: translateX(100%);
+      transition: transform .3s ease;
+    }
+    .detail-panel.open { transform: translateX(0); }
+
+    .detail-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .detail-badge {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 22px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .detail-badge.buy   { background: var(--buy-bg);   color: var(--buy);   border: 2px solid var(--buy);   }
+    .detail-badge.watch { background: var(--watch-bg); color: var(--watch); border: 2px solid var(--watch); }
+    .detail-badge.sell  { background: var(--sell-bg);  color: var(--sell);  border: 2px solid var(--sell);  }
+
+    .detail-title-area { flex: 1; }
+    .detail-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+    .detail-sub {
+      font-size: 13px;
+      color: var(--text-m);
+      margin-top: 4px;
+    }
+
+    .detail-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-m); font-size: 22px;
+      transition: color .2s;
+      flex-shrink: 0;
+    }
+    .detail-close:hover { color: var(--text); }
+
+    /* Key stats in detail */
+    .detail-stats {
+      padding: 16px 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ds-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-s);
+      padding: 12px;
+    }
+    .ds-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .ds-label { font-size: 11px; color: var(--text-s); margin-top: 3px; }
+
+    /* 12 Kennzahlen */
+    .detail-section-title {
+      padding: 16px 24px 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-s);
+    }
+
+    .kennzahl-list { padding: 0 24px 24px; display: flex; flex-direction: column; gap: 8px; }
+
+    .kennzahl-row {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-s);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .kz-score {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .kz-score.p1  { background: rgba(76,175,130,.15); color: var(--buy);  border: 1px solid rgba(76,175,130,.3); }
+    .kz-score.z0  { background: rgba(139,149,168,.1); color: var(--text-m); border: 1px solid rgba(139,149,168,.2); }
+    .kz-score.m1  { background: rgba(224,82,82,.12);  color: var(--sell); border: 1px solid rgba(224,82,82,.3); }
+
+    .kz-info { flex: 1; }
+    .kz-name { font-size: 13px; font-weight: 500; }
+    .kz-value { font-size: 12px; color: var(--text-m); font-family: 'DM Mono', monospace; }
+
+    .kz-bar {
+      width: 40px; height: 4px; border-radius: 2px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* Score progress ring hint */
+    .detail-score-bar {
+      padding: 0 24px 16px;
+    }
+    .score-track {
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+      overflow: visible;
+      position: relative;
+    }
+    .score-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .6s ease;
+    }
+    .score-fill.buy   { background: linear-gradient(90deg, var(--teal-d), var(--buy)); }
+    .score-fill.watch { background: linear-gradient(90deg, var(--teal-d), var(--watch)); }
+    .score-fill.sell  { background: var(--sell); }
+    .score-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-s);
+      margin-top: 6px;
+    }
+
+    /* ───────── EMPTY STATE ───────── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-s);
+    }
+    .empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+    .empty-state h3 { font-size: 18px; color: var(--text-m); margin-bottom: 6px; }
+
+    /* ───────── LOADING ───────── */
+    .loading {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-m);
+    }
+    .spinner {
+      display: inline-block;
+      width: 32px; height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--teal);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin-bottom: 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ───────── DEMO BANNER ───────── */
+    .demo-banner {
+      background: rgba(201,168,76,.08);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      max-width: 1200px;
+      margin: 12px auto 0;
+      font-size: 13px;
+      color: var(--watch);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ───────── RESPONSIVE ───────── */
+    @media (max-width: 700px) {
+      .stock-card {
+        grid-template-columns: auto 1fr auto;
+        grid-template-rows: auto auto;
+      }
+      .metric.abstand-col,
+      .metric.exchange-col { display: none; }
+      .header-stats .stat-pill:not(:first-child) { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .header-inner { padding: 0 12px; }
+      .toolbar { padding: 12px; }
+      .stock-list { padding: 0 12px 40px; }
+      .filter-row { padding: 0 12px 10px; }
+      .results-info { padding: 0 12px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <div class="logo">Stock<span>Rater</span></div>
+    <div class="header-stats">
+      <div class="stat-pill">
+        <span class="stat-dot buy"></span>
+        <span id="count-buy">–</span> Kauf
+      </div>
+      <div class="stat-pill">
+        <span class="stat-dot watch"></span>
+        <span id="count-watch">–</span> Beob.
+      </div>
+      <div class="stat-pill">
+        <span class="stat-dot sell"></span>
+        <span id="count-sell">–</span> Verkauf
+      </div>
+    </div>
+    <div class="updated-time" id="updated-time"></div>
+  </div>
+</header>
+
+<!-- ── TOOLBAR ── -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="search-input" id="search" type="text" placeholder="Aktien suchen…" autocomplete="off">
+  </div>
+  <button class="btn" id="sort-btn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 6h18M7 12h10M11 18h2"/>
+    </svg>
+    Sortieren
+  </button>
+  <button class="btn btn-watchlist" id="watchlist-btn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+    Merkliste <span id="watchlist-count"></span>
+  </button>
+</div>
+
+<!-- ── FILTER PILLS ── -->
+<div class="filter-row">
+  <span class="filter-label">Filter:</span>
+  <button class="pill active" data-rec="all">Alle</button>
+  <button class="pill buy-pill"   data-rec="buy">Kaufempfehlung</button>
+  <button class="pill watch-pill" data-rec="watch">Beobachten</button>
+  <button class="pill sell-pill"  data-rec="sell">Verkauf</button>
+</div>
+
+<!-- ── DEMO BANNER ── -->
+<div class="demo-banner" id="demo-banner" style="display:none;">
+  ⚠ Demo-Daten. Führe <strong>fetch_stocks.py</strong> aus und ersetze <code>docs/stocks.json</code> für echte Kursdaten.
+</div>
+
+<!-- ── RESULTS INFO ── -->
+<div class="results-info" id="results-info"></div>
+
+<!-- ── STOCK LIST ── -->
+<div class="stock-list" id="stock-list">
+  <div class="loading">
+    <div class="spinner"></div>
+    <div>Lade Daten…</div>
+  </div>
+</div>
+
+<!-- ── SORT MODAL ── -->
+<div class="modal-overlay" id="sort-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Sortieren</span>
+      <button class="modal-close" id="sort-close">✕</button>
+    </div>
+    <div id="sort-options">
+      <div class="sort-option selected" data-sort="rating">
+        <div class="sort-radio"></div>
+        Empfehlung (Rating)
+      </div>
+      <div class="sort-option" data-sort="abstand">
+        <div class="sort-radio"></div>
+        Abstand (größter zuerst)
+      </div>
+      <div class="sort-option" data-sort="price_asc">
+        <div class="sort-radio"></div>
+        Kurs (aufsteigend)
+      </div>
+      <div class="sort-option" data-sort="price_desc">
+        <div class="sort-radio"></div>
+        Kurs (absteigend)
+      </div>
+      <div class="sort-option" data-sort="name">
+        <div class="sort-radio"></div>
+        Alphabet (A–Z)
+      </div>
+      <div class="sort-option" data-sort="marketcap">
+        <div class="sort-radio"></div>
+        Marktkapitalisierung
+      </div>
+    </div>
+    <button class="modal-btn" id="sort-apply">Sortieren</button>
+  </div>
+</div>
+
+<!-- ── DETAIL PANEL ── -->
+<div class="detail-overlay" id="detail-overlay"></div>
+<div class="detail-panel" id="detail-panel"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let allStocks = [];
+let filtered  = [];
+let watchlist = new Set(JSON.parse(localStorage.getItem('sr-watchlist') || '[]'));
+let currentSort   = 'rating';
+let pendingSort   = 'rating';
+let currentFilter = 'all';
+let searchQuery   = '';
+let showWatchlist = false;
+
+// ══════════════════════════════════════════
+//  KENNZAHL LABELS
+// ══════════════════════════════════════════
+const KZ_LABELS = {
+  eigenkapitalrentabilitaet: 'Eigenkapitalrentabilität',
+  eigenkapitalquote:         'Eigenkapitalquote',
+  ebitMarge:                 'EBIT-Marge',
+  kgvAktuell:                'KGV (aktuell)',
+  kgv5Jahre:                 'KGV (Ø 5 Jahre)',
+  kursVs6M:                  'Kurs vs. Index 6M',
+  kursVs12M:                 'Kurs vs. Index 12M',
+  momentum:                  'Kursmomentum',
+  gewinnwachstum:            'Erwartetes Gewinnwachstum',
+  gewinnrevision:            'Gewinnschätzungsrevision',
+  quartalszahlen:            'Reaktion Quartalszahlen',
+  kbv:                       'Kurs-Buchwert-Verhältnis (KBV)',
+};
+
+// ══════════════════════════════════════════
+//  LOAD DATA
+// ══════════════════════════════════════════
+async function loadData() {
+  try {
+    const res = await fetch('stocks.json');
+    if (!res.ok) throw new Error('Fehler beim Laden');
+    const data = await res.json();
+    allStocks = data.stocks || [];
+
+    if (data.metadata?.note) {
+      document.getElementById('demo-banner').style.display = 'flex';
+    }
+    if (data.metadata?.updatedAt) {
+      const d = new Date(data.metadata.updatedAt);
+      document.getElementById('updated-time').textContent =
+        d.toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',year:'numeric'}) + ' ' +
+        d.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
+    }
+
+    updateStats();
+    applyFilters();
+  } catch (e) {
+    document.getElementById('stock-list').innerHTML =
+      `<div class="empty-state"><div class="empty-state-icon">⚠️</div>
+       <h3>Daten konnten nicht geladen werden</h3>
+       <p>Stelle sicher, dass stocks.json im selben Ordner liegt.</p></div>`;
+  }
+}
+
+// ══════════════════════════════════════════
+//  STATS
+// ══════════════════════════════════════════
+function updateStats() {
+  document.getElementById('count-buy').textContent   = allStocks.filter(s=>s.recommendation==='buy').length;
+  document.getElementById('count-watch').textContent = allStocks.filter(s=>s.recommendation==='watch').length;
+  document.getElementById('count-sell').textContent  = allStocks.filter(s=>s.recommendation==='sell').length;
+}
+
+// ══════════════════════════════════════════
+//  FILTER & SORT
+// ══════════════════════════════════════════
+function applyFilters() {
+  let pool = [...allStocks];
+
+  if (showWatchlist) {
+    pool = pool.filter(s => watchlist.has(s.symbol));
+  } else if (currentFilter !== 'all') {
+    pool = pool.filter(s => s.recommendation === currentFilter);
+  }
+
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    pool = pool.filter(s =>
+      s.name.toLowerCase().includes(q) ||
+      s.symbol.toLowerCase().includes(q) ||
+      (s.sector||'').toLowerCase().includes(q) ||
+      (s.exchange||'').toLowerCase().includes(q)
+    );
+  }
+
+  // Sort
+  pool.sort((a, b) => {
+    switch (currentSort) {
+      case 'rating':    return (b.rating ?? -99) - (a.rating ?? -99);
+      case 'abstand':   return (b.abstand ?? -1) - (a.abstand ?? -1);
+      case 'price_asc': return (a.price ?? 0) - (b.price ?? 0);
+      case 'price_desc':return (b.price ?? 0) - (a.price ?? 0);
+      case 'name':      return a.name.localeCompare(b.name, 'de');
+      case 'marketcap': return (b.marketCap ?? 0) - (a.marketCap ?? 0);
+      default:          return 0;
+    }
+  });
+
+  filtered = pool;
+  renderList();
+}
+
+// ══════════════════════════════════════════
+//  RENDER LIST
+// ══════════════════════════════════════════
+function renderList() {
+  const container = document.getElementById('stock-list');
+  const info = document.getElementById('results-info');
+
+  const label = showWatchlist ? ' in der Merkliste' :
+    currentFilter === 'buy'   ? ' Kaufempfehlungen' :
+    currentFilter === 'watch' ? ' zu beobachtende Aktien' :
+    currentFilter === 'sell'  ? ' Verkaufsempfehlungen' : '';
+
+  info.innerHTML = `<strong>${filtered.length}</strong> Aktien${label}${searchQuery ? ` für „${searchQuery}"` : ''}`;
+
+  if (!filtered.length) {
+    container.innerHTML = `<div class="empty-state">
+      <div class="empty-state-icon">${showWatchlist ? '☆' : '🔍'}</div>
+      <h3>${showWatchlist ? 'Merkliste ist leer' : 'Keine Aktien gefunden'}</h3>
+      <p>${showWatchlist ? 'Klicke auf ☆ bei einer Aktie um sie hinzuzufügen.' : 'Versuche andere Suchbegriffe.'}</p>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(s => renderCard(s)).join('');
+
+  // Bind events
+  container.querySelectorAll('.stock-card').forEach(card => {
+    const sym = card.dataset.symbol;
+    card.addEventListener('click', e => {
+      if (e.target.closest('.watchlist-btn')) return;
+      if (e.target.closest('.rating-badge')) { openDetail(sym, true); return; }
+      openDetail(sym);
+    });
+  });
+  container.querySelectorAll('.watchlist-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      toggleWatchlist(btn.dataset.symbol);
+    });
+  });
+  container.querySelectorAll('.rating-badge').forEach(badge => {
+    badge.addEventListener('click', e => {
+      e.stopPropagation();
+      openDetail(badge.dataset.symbol, true);
+    });
+  });
+}
+
+function renderCard(s) {
+  const rec   = s.recommendation;
+  const starred = watchlist.has(s.symbol);
+  const starIcon = starred ? '★' : '☆';
+  const ratingStr = s.rating > 0 ? `+${s.rating}` : `${s.rating}`;
+  const arrowIcon = rec === 'buy' ? '↑' : rec === 'sell' ? '↓' : '·';
+
+  const fmt = (v, dec=2) => v != null ? Number(v).toFixed(dec) : '–';
+  const fmtCurrency = (v, cur) => {
+    if (v == null) return '–';
+    const parts = Number(v).toFixed(2).split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const symbol = cur === 'USD' ? '$' : cur === 'EUR' ? '€' : cur === 'CHF' ? 'Fr.' :
+                   cur === 'GBP' ? '£' : cur === 'JPY' ? '¥' : (cur||'');
+    return `${parts[0]},${parts[1]} ${symbol}`;
+  };
+
+  const abstandClass = s.abstand != null
+    ? (s.abstand >= 10 ? 'positive' : s.abstand >= 5 ? '' : 'negative')
+    : '';
+
+  return `<div class="stock-card ${rec}" data-symbol="${s.symbol}">
+    <div class="rating-badge ${rec}" data-symbol="${s.symbol}" title="Rating-Details">
+      ${ratingStr}
+      <span class="badge-arrow ${rec}">${arrowIcon}</span>
+    </div>
+    <div class="stock-info">
+      <div class="stock-name">${s.name}</div>
+      <div class="stock-meta">
+        <span class="stock-symbol">${s.symbol}</span>
+        <span class="stock-exchange">${s.exchange || '–'}</span>
+        ${s.sector ? `<span class="stock-sector">· ${s.sector}</span>` : ''}
+      </div>
+    </div>
+    <div class="metric abstand-col">
+      <div class="metric-value ${abstandClass}">${s.abstand != null ? fmt(s.abstand, 1)+'%' : '–'}</div>
+      <div class="metric-label">Abstand</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">${fmtCurrency(s.price, s.currency)}</div>
+      <div class="metric-label">Kurs</div>
+    </div>
+    <button class="watchlist-btn ${starred ? 'starred' : ''}" data-symbol="${s.symbol}" title="Merkliste">
+      ${starIcon}
+    </button>
+  </div>`;
+}
+
+// ══════════════════════════════════════════
+//  DETAIL PANEL
+// ══════════════════════════════════════════
+function openDetail(symbol, scrollToRating=false) {
+  const s = allStocks.find(x => x.symbol === symbol);
+  if (!s) return;
+
+  const panel   = document.getElementById('detail-panel');
+  const overlay = document.getElementById('detail-overlay');
+  const rec      = s.recommendation;
+
+  const fmt = (v, dec=2, unit='') => v != null ? `${Number(v).toFixed(dec)}${unit}` : '–';
+  const fmtBig = (v) => {
+    if (!v) return '–';
+    if (v >= 1e12) return (v/1e12).toFixed(2) + ' Bio.';
+    if (v >= 1e9)  return (v/1e9).toFixed(1) + ' Mrd.';
+    if (v >= 1e6)  return (v/1e6).toFixed(1) + ' Mio.';
+    return v.toLocaleString('de-DE');
+  };
+
+  // Score bar: min -12, max +12, normalized to 0-100%
+  const scoreMin = -12, scoreMax = 12;
+  const scorePct = Math.max(0, Math.min(100, ((s.rating - scoreMin) / (scoreMax - scoreMin)) * 100));
+
+  const kzRows = Object.entries(s.details || {}).map(([key, d]) => {
+    const scoreClass = d.score === 1 ? 'p1' : d.score === -1 ? 'm1' : 'z0';
+    const scoreLabel = d.score === 1 ? '+1' : d.score === -1 ? '−1' : '0';
+    const valStr = d.value != null
+      ? `${Number(d.value).toFixed(2)}${d.unit}`
+      : 'k.A.';
+    return `<div class="kennzahl-row">
+      <div class="kz-score ${scoreClass}">${scoreLabel}</div>
+      <div class="kz-info">
+        <div class="kz-name">${KZ_LABELS[key] || key}</div>
+        <div class="kz-value">${valStr}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const ratingStr = s.rating > 0 ? `+${s.rating}` : `${s.rating}`;
+  const recLabel  = rec === 'buy' ? '✓ Kaufempfehlung' : rec === 'sell' ? '✗ Verkaufsempfehlung' : '~ Beobachten';
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <div class="detail-badge ${rec}">${ratingStr}</div>
+      <div class="detail-title-area">
+        <div class="detail-name">${s.name}</div>
+        <div class="detail-sub">${s.symbol} · ${s.exchange || ''} · ${s.sector || ''}</div>
+      </div>
+      <button class="detail-close" id="detail-close">✕</button>
+    </div>
+
+    <div class="detail-stats">
+      <div class="ds-item">
+        <div class="ds-value">${s.price != null ? s.price.toFixed(2) + ' ' + (s.currency||'') : '–'}</div>
+        <div class="ds-label">Kurs</div>
+      </div>
+      <div class="ds-item">
+        <div class="ds-value">${s.abstand != null ? s.abstand.toFixed(1)+'%' : '–'}</div>
+        <div class="ds-label">Abstand</div>
+      </div>
+      <div class="ds-item">
+        <div class="ds-value">${fmtBig(s.marketCap)}</div>
+        <div class="ds-label">Marktkapital.</div>
+      </div>
+      <div class="ds-item">
+        <div class="ds-value">${s.high52w != null ? s.high52w.toFixed(2) : '–'}</div>
+        <div class="ds-label">52W-Hoch</div>
+      </div>
+      <div class="ds-item" style="grid-column:span 2">
+        <div class="ds-value" style="color:var(--${rec === 'buy' ? 'buy' : rec === 'sell' ? 'sell' : 'watch'})">${recLabel}</div>
+        <div class="ds-label">Bewertung</div>
+      </div>
+    </div>
+
+    <div class="detail-score-bar" id="score-bar-section">
+      <div class="detail-section-title">Rating-Score: ${ratingStr} / 12</div>
+      <div class="score-track">
+        <div class="score-fill ${rec}" id="score-fill" style="width:0%"></div>
+      </div>
+      <div class="score-labels"><span>−12</span><span>0</span><span>+12</span></div>
+    </div>
+
+    <div class="detail-section-title">Die 12 Kennzahlen</div>
+    <div class="kennzahl-list">${kzRows}</div>
+  `;
+
+  document.getElementById('detail-close').addEventListener('click', closeDetail);
+
+  overlay.classList.add('open');
+  panel.classList.add('open');
+
+  // Animate score bar
+  setTimeout(() => {
+    const fill = document.getElementById('score-fill');
+    if (fill) fill.style.width = scorePct + '%';
+  }, 50);
+
+  if (scrollToRating) {
+    setTimeout(() => {
+      document.getElementById('score-bar-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function closeDetail() {
+  document.getElementById('detail-overlay').classList.remove('open');
+  document.getElementById('detail-panel').classList.remove('open');
+}
+document.getElementById('detail-overlay').addEventListener('click', closeDetail);
+
+// ══════════════════════════════════════════
+//  WATCHLIST
+// ══════════════════════════════════════════
+function toggleWatchlist(symbol) {
+  if (watchlist.has(symbol)) {
+    watchlist.delete(symbol);
+  } else {
+    watchlist.add(symbol);
+  }
+  localStorage.setItem('sr-watchlist', JSON.stringify([...watchlist]));
+  updateWatchlistBtn();
+  if (showWatchlist) applyFilters();
+  else renderList();
+}
+
+function updateWatchlistBtn() {
+  const btn = document.getElementById('watchlist-btn');
+  const cnt = document.getElementById('watchlist-count');
+  const n = watchlist.size;
+  cnt.textContent = n > 0 ? `(${n})` : '';
+  btn.classList.toggle('has-items', n > 0 || showWatchlist);
+  btn.classList.toggle('active', showWatchlist);
+}
+
+document.getElementById('watchlist-btn').addEventListener('click', () => {
+  showWatchlist = !showWatchlist;
+  if (showWatchlist) {
+    currentFilter = 'all';
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-rec="all"]').classList.add('active');
+  }
+  updateWatchlistBtn();
+  applyFilters();
+});
+
+// ══════════════════════════════════════════
+//  SORT MODAL
+// ══════════════════════════════════════════
+document.getElementById('sort-btn').addEventListener('click', () => {
+  document.getElementById('sort-modal').classList.add('open');
+  pendingSort = currentSort;
+  document.querySelectorAll('.sort-option').forEach(o => {
+    o.classList.toggle('selected', o.dataset.sort === currentSort);
+  });
+});
+document.getElementById('sort-close').addEventListener('click', () => {
+  document.getElementById('sort-modal').classList.remove('open');
+});
+document.getElementById('sort-modal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+document.querySelectorAll('.sort-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    pendingSort = opt.dataset.sort;
+  });
+});
+document.getElementById('sort-apply').addEventListener('click', () => {
+  currentSort = pendingSort;
+  document.getElementById('sort-modal').classList.remove('open');
+  applyFilters();
+});
+
+// ══════════════════════════════════════════
+//  FILTER PILLS
+// ══════════════════════════════════════════
+document.querySelectorAll('.pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    currentFilter = pill.dataset.rec;
+    showWatchlist = false;
+    updateWatchlistBtn();
+    applyFilters();
+  });
+});
+
+// ══════════════════════════════════════════
+//  SEARCH
+// ══════════════════════════════════════════
+let searchTimer;
+document.getElementById('search').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    searchQuery = e.target.value.trim();
+    applyFilters();
+  }, 200);
+});
+
+// ══════════════════════════════════════════
+//  KEYBOARD
+// ══════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeDetail();
+    document.getElementById('sort-modal').classList.remove('open');
+  }
+});
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+updateWatchlistBtn();
+loadData();
+</script>
+</body>
+</html>
