@@ -57,39 +57,6 @@ def find_col(df, candidates):
                 return original
     return None
 
-def is_valid_ticker(sym, max_len=15):
-    """
-    Prüft ob ein String ein plausibler Ticker ist.
-    Filtert reine Zahlen, Kurswerte (z.B. -2.42, 1.273,51) und leere Strings aus.
-    """
-    if not sym or sym in ("nan", "", "-", "N/A"):
-        return False
-    if len(sym) > max_len:
-        return False
-    # Komma-Tausendertrennzeichen entfernen, dann float-Test
-    try:
-        float(sym.replace(",", "").replace("−", "-"))
-        return False  # Es ist eine Zahl → kein Ticker
-    except ValueError:
-        return True
-
-def normalize_suffix(sym, suffix):
-    """
-    Hängt suffix sauber an und behandelt Klassen-Suffixe korrekt.
-    Beispiel (suffix='.TO'): BIP.UN.TO → BIP-UN.TO, CTC.A.TO → CTC-A.TO
-    Beispiel (suffix='.L'):  BT.A.L → BT-A.L
-    """
-    # Falls Suffix bereits vorhanden, zuerst entfernen
-    clean_suffix = suffix.lstrip(".")   # z.B. "TO", "L", "DE"
-    # Entferne vorhandenes Suffix am Ende (mit oder ohne Punkt)
-    for variant in [suffix, "." + clean_suffix]:
-        if sym.upper().endswith(variant.upper()):
-            sym = sym[: -len(variant)]
-            break
-    # Innere Punkte (Klassen-Kennzeichen wie .A, .B, .UN) → Bindestrich
-    sym = sym.replace(".", "-")
-    return sym + suffix
-
 def extract_tickers(df, sym_hints, name_hints, suffix="", exchange=""):
     """
     Extrahiert (symbol, name, sector, exchange) aus einem DataFrame.
@@ -101,14 +68,10 @@ def extract_tickers(df, sym_hints, name_hints, suffix="", exchange=""):
         return []
     results = []
     for _, row in df.iterrows():
-        raw = str(row[sym_col]).strip()
-        if not is_valid_ticker(raw):
+        sym = str(row[sym_col]).strip().replace(".", "-") if "." not in suffix else str(row[sym_col]).strip()
+        if sym in ("nan", "", "-", "N/A"):
             continue
-        if suffix:
-            sym = normalize_suffix(raw, suffix)
-        else:
-            # US-Markt: BRK.B → BRK-B (Yahoo-Konvention)
-            sym = raw.replace(".", "-")
+        sym = sym + suffix if suffix and not sym.endswith(suffix) else sym
         name = str(row[name_col]).strip() if name_col else sym
         results.append((sym, name, "", exchange))
     return results
@@ -129,7 +92,7 @@ def get_sp500():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip().replace(".", "-")
-            if not is_valid_ticker(sym):
+            if sym in ("nan", ""):
                 continue
             name = str(row[name_col]).strip() if name_col else sym
             sec  = str(row[sec_col]).strip()  if sec_col  else ""
@@ -142,10 +105,11 @@ def get_nasdaq100():
     url = "https://en.wikipedia.org/wiki/Nasdaq-100"
     tables = fetch_wiki_table(url, min_rows=90)
     for df in tables:
-        sym_col = find_col(df, ["ticker", "symbol"])
+        sym_col  = find_col(df, ["ticker", "symbol"])
+        name_col = find_col(df, ["company", "security", "name"])
         if not sym_col:
             continue
-        results = extract_tickers(df, ["ticker", "symbol"], ["company", "security", "name"], exchange="NASDAQ 100")
+        results = extract_tickers(df, ["ticker","symbol"], ["company","security","name"], exchange="NASDAQ 100")
         if len(results) > 80:
             return results
     return []
@@ -154,16 +118,17 @@ def get_dax():
     url = "https://en.wikipedia.org/wiki/DAX"
     tables = fetch_wiki_table(url, min_rows=35)
     for df in tables:
-        sym_col  = find_col(df, ["ticker", "symbol", "index"])
-        name_col = find_col(df, ["company", "name", "member"])
+        sym_col = find_col(df, ["ticker", "symbol", "index"])
         if not sym_col:
             continue
+        name_col = find_col(df, ["company", "name", "member"])
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
+            if sym in ("nan", "") or len(sym) > 10:
                 continue
-            sym = normalize_suffix(sym, ".DE")
+            # Entferne .DE falls schon vorhanden, füge es dann sauber an
+            sym = sym.replace(".DE", "").replace(".de", "") + ".DE"
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "DAX"))
         if len(results) >= 35:
@@ -181,9 +146,9 @@ def get_mdax():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
+            if sym in ("nan", "") or len(sym) > 10:
                 continue
-            sym = normalize_suffix(sym, ".DE")
+            sym = sym.replace(".DE","") + ".DE"
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "MDAX"))
         if len(results) >= 40:
@@ -198,15 +163,7 @@ def get_stoxx50():
         name_col = find_col(df, ["company", "name"])
         if not sym_col:
             continue
-        results = []
-        for _, row in df.iterrows():
-            sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
-                continue
-            # STOXX-Ticker haben bereits ihr Börsen-Suffix (z.B. ADS.DE, MC.PA)
-            # Punkte im Suffix-Bereich NICHT ersetzen, nur führende Bereinigung
-            name = str(row[name_col]).strip() if name_col else sym
-            results.append((sym, name, "", "EURO STOXX 50"))
+        results = extract_tickers(df, ["ticker","symbol"], ["company","name"], exchange="EURO STOXX 50")
         if len(results) >= 40:
             return results
     return []
@@ -222,9 +179,9 @@ def get_ftse100():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=10):
+            if sym in ("nan", "") or len(sym) > 8:
                 continue
-            sym = normalize_suffix(sym, ".L")
+            sym = sym.replace(".L","") + ".L"
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "FTSE 100"))
         if len(results) >= 90:
@@ -242,7 +199,7 @@ def get_cac40():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
+            if sym in ("nan", "") or len(sym) > 10:
                 continue
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "CAC 40"))
@@ -261,7 +218,7 @@ def get_ibex35():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
+            if sym in ("nan", "") or len(sym) > 10:
                 continue
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "IBEX 35"))
@@ -280,7 +237,7 @@ def get_aex():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
+            if sym in ("nan", "") or len(sym) > 10:
                 continue
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "AEX"))
@@ -299,7 +256,7 @@ def get_smi():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
+            if sym in ("nan", "") or len(sym) > 12:
                 continue
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "SMI"))
@@ -311,6 +268,7 @@ def get_nikkei225():
     url = "https://en.wikipedia.org/wiki/Nikkei_225"
     tables = fetch_wiki_table(url, min_rows=100)
     for df in tables:
+        # Nikkei hat oft Zahlen-Codes
         sym_col  = find_col(df, ["code", "ticker", "symbol"])
         name_col = find_col(df, ["company", "name", "english"])
         if not sym_col:
@@ -338,9 +296,9 @@ def get_asx200():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=10):
+            if sym in ("nan", "") or len(sym) > 8:
                 continue
-            sym = normalize_suffix(sym, ".AX")
+            sym = sym.replace(".AX","") + ".AX"
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "ASX"))
         if len(results) >= 100:
@@ -358,11 +316,9 @@ def get_tsx60():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=12):
+            if sym in ("nan", "") or len(sym) > 10:
                 continue
-            # normalize_suffix ersetzt innere Punkte durch Bindestriche:
-            # BIP.UN.TO → BIP-UN.TO, CTC.A.TO → CTC-A.TO, TECK.B.TO → TECK-B.TO
-            sym = normalize_suffix(sym, ".TO")
+            sym = sym.replace(".TO","") + ".TO"
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "TSX"))
         if len(results) >= 50:
@@ -380,9 +336,9 @@ def get_nifty50():
         results = []
         for _, row in df.iterrows():
             sym = str(row[sym_col]).strip()
-            if not is_valid_ticker(sym, max_len=20):
+            if sym in ("nan", "") or len(sym) > 20:
                 continue
-            sym = normalize_suffix(sym, ".NS")
+            sym = sym.replace(".NS","") + ".NS"
             name = str(row[name_col]).strip() if name_col else sym
             results.append((sym, name, "", "NIFTY"))
         if len(results) >= 40:
@@ -392,21 +348,21 @@ def get_nifty50():
 def get_hang_seng():
     """Hang Seng – feste Liste da Wikipedia-Tabelle unzuverlässig"""
     return [
-        ("0700.HK", "Tencent Holdings",      "", "HSI"),
-        ("9988.HK", "Alibaba Group",          "", "HSI"),
-        ("0005.HK", "HSBC Holdings",          "", "HSI"),
-        ("1299.HK", "AIA Group",              "", "HSI"),
-        ("0941.HK", "China Mobile",           "", "HSI"),
-        ("3690.HK", "Meituan",                "", "HSI"),
-        ("0388.HK", "HK Exchanges",           "", "HSI"),
-        ("2318.HK", "Ping An Insurance",      "", "HSI"),
-        ("1810.HK", "Xiaomi",                 "", "HSI"),
-        ("9999.HK", "NetEase",                "", "HSI"),
-        ("0883.HK", "CNOOC",                  "", "HSI"),
-        ("2382.HK", "Sunny Optical",          "", "HSI"),
-        ("0011.HK", "Hang Seng Bank",         "", "HSI"),
-        ("1177.HK", "Sino Biopharmaceutical", "", "HSI"),
-        ("6098.HK", "Country Garden Services","", "HSI"),
+        ("0700.HK", "Tencent Holdings",    "", "HSI"),
+        ("9988.HK", "Alibaba Group",        "", "HSI"),
+        ("0005.HK", "HSBC Holdings",        "", "HSI"),
+        ("1299.HK", "AIA Group",            "", "HSI"),
+        ("0941.HK", "China Mobile",         "", "HSI"),
+        ("3690.HK", "Meituan",              "", "HSI"),
+        ("0388.HK", "HK Exchanges",         "", "HSI"),
+        ("2318.HK", "Ping An Insurance",    "", "HSI"),
+        ("1810.HK", "Xiaomi",               "", "HSI"),
+        ("9999.HK", "NetEase",              "", "HSI"),
+        ("0883.HK", "CNOOC",                "", "HSI"),
+        ("2382.HK", "Sunny Optical",        "", "HSI"),
+        ("0011.HK", "Hang Seng Bank",       "", "HSI"),
+        ("1177.HK", "Sino Biopharmaceutical","", "HSI"),
+        ("6098.HK", "Country Garden Services","","HSI"),
     ]
 
 # ─────────────────────────────────────────────
@@ -417,7 +373,7 @@ def is_tech(sector):
     return sector and "tech" in sector.lower()
 
 def is_financial(sector):
-    return sector and any(k in sector.lower() for k in ["bank", "financial", "insurance", "real estate", "reit"])
+    return sector and any(k in sector.lower() for k in ["bank","financial","insurance","real estate","reit"])
 
 def score_roe(roe, sector):
     if roe is None: return 0
@@ -460,21 +416,11 @@ def price_change(ticker_obj, months):
 
 INDEX_CACHE = {}
 INDEX_MAP   = {
-    "S&P 500":      "^GSPC",
-    "NASDAQ 100":   "^NDX",
-    "DAX":          "^GDAXI",
-    "MDAX":         "^MDAXI",
-    "EURO STOXX 50":"^STOXX50E",
-    "FTSE 100":     "^FTSE",
-    "CAC 40":       "^FCHI",
-    "IBEX 35":      "^IBEX",
-    "AEX":          "^AEX",
-    "SMI":          "^SSMI",
-    "Nikkei":       "^N225",
-    "ASX":          "^AXJO",
-    "TSX":          "^GSPTSE",
-    "NIFTY":        "^NSEI",
-    "HSI":          "^HSI",
+    "S&P 500": "^GSPC", "NASDAQ 100": "^NDX", "DAX": "^GDAXI",
+    "MDAX": "^MDAXI", "EURO STOXX 50": "^STOXX50E", "FTSE 100": "^FTSE",
+    "CAC 40": "^FCHI", "IBEX 35": "^IBEX", "AEX": "^AEX", "SMI": "^SSMI",
+    "Nikkei": "^N225", "ASX": "^AXJO", "TSX": "^GSPTSE",
+    "NIFTY": "^NSEI", "HSI": "^HSI",
 }
 
 def idx_change(exchange, months):
@@ -565,18 +511,18 @@ def process(symbol, name, sector, exchange):
             "rating":     total,
             "recommendation": rec,
             "details": {
-                "eigenkapitalrentabilitaet": {"score": s_roe,  "value": rv(roe * 100)    if roe    else None, "unit": "%"},
-                "eigenkapitalquote":         {"score": s_eq,   "value": eq_ratio,                             "unit": "%"},
-                "ebitMarge":                 {"score": s_ebit, "value": rv(ebit_m * 100) if ebit_m else None, "unit": "%"},
-                "kgvAktuell":                {"score": s_pe,   "value": rv(pe),                               "unit": ""},
-                "kgv5Jahre":                 {"score": s_pe5,  "value": rv(pe_fwd),                           "unit": ""},
-                "kursVs6M":                  {"score": s_6m,   "value": rv(diff6),                            "unit": "%"},
-                "kursVs12M":                 {"score": s_12m,  "value": rv(diff12),                           "unit": "%"},
-                "momentum":                  {"score": s_mom,  "value": None,                                 "unit": ""},
-                "gewinnwachstum":            {"score": s_grow, "value": rv(growth * 100) if growth else None, "unit": "%"},
-                "gewinnrevision":            {"score": s_rev,  "value": rv(growth * 100) if growth else None, "unit": "%"},
-                "quartalszahlen":            {"score": 0,      "value": None,                                 "unit": "%"},
-                "kbv":                       {"score": s_pbv,  "value": rv(pbv),                              "unit": ""},
+                "eigenkapitalrentabilitaet": {"score": s_roe,  "value": rv(roe*100)  if roe  else None, "unit": "%"},
+                "eigenkapitalquote":         {"score": s_eq,   "value": eq_ratio,                        "unit": "%"},
+                "ebitMarge":                 {"score": s_ebit, "value": rv(ebit_m*100) if ebit_m else None, "unit": "%"},
+                "kgvAktuell":                {"score": s_pe,   "value": rv(pe),                           "unit": ""},
+                "kgv5Jahre":                 {"score": s_pe5,  "value": rv(pe_fwd),                       "unit": ""},
+                "kursVs6M":                  {"score": s_6m,   "value": rv(diff6),                        "unit": "%"},
+                "kursVs12M":                 {"score": s_12m,  "value": rv(diff12),                       "unit": "%"},
+                "momentum":                  {"score": s_mom,  "value": None,                             "unit": ""},
+                "gewinnwachstum":            {"score": s_grow, "value": rv(growth*100) if growth else None, "unit": "%"},
+                "gewinnrevision":            {"score": s_rev,  "value": rv(growth*100) if growth else None, "unit": "%"},
+                "quartalszahlen":            {"score": 0,      "value": None,                             "unit": "%"},
+                "kbv":                       {"score": s_pbv,  "value": rv(pbv),                          "unit": ""},
             },
             "updatedAt": datetime.now().isoformat()
         }
@@ -666,7 +612,7 @@ def main():
             "count":     len(results),
             "updatedAt": datetime.now().isoformat(),
             "errors":    errors,
-            "version":   "2.1"
+            "version":   "2.0"
         },
         "stocks": results
     }
