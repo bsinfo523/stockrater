@@ -1,7 +1,5 @@
 name: Aktien-Daten aktualisieren
 
-on:name: Aktien-Daten aktualisieren
-
 on:
   schedule:
     - cron: '0 20 * * 1-5'
@@ -44,49 +42,6 @@ jobs:
           git stash
           git pull --rebase origin main
           git stash pop
-          git add docs/stocks.json
-          git diff --staged --quiet || git commit -m "Daten: $(date '+%d.%m.%Y %H:%M')"
-          git push
-  schedule:
-    - cron: '0 20 * * 1-5'
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    # Verhindert parallele Ausführung
-    concurrency:
-      group: update-stocks
-      cancel-in-progress: false
-
-    steps:
-      - name: Repository auschecken
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0        # Komplette Historie holen
-
-      - name: Python einrichten
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Abhängigkeiten installieren
-        run: pip install yfinance pandas requests beautifulsoup4 lxml
-
-      - name: Aktiendaten abrufen
-        run: python scripts/fetch_stocks.py
-
-      - name: Änderungen committen & pushen
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
           git add docs/stocks.json
           git diff --staged --quiet || git commit -m "Daten: $(date '+%d.%m.%Y %H:%M')"
           git push
