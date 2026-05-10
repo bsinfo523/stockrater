@@ -1,0 +1,467 @@
+{
+  "metadata": {
+    "count": 25,
+    "updatedAt": "2026-05-09T12:00:00",
+    "errors": 0,
+    "version": "1.0",
+    "note": "Demo-Daten. Führe fetch_stocks.py aus um echte Daten zu laden."
+  },
+  "stocks": [
+    {
+      "symbol": "AAPL", "name": "Apple Inc.", "sector": "Technology", "exchange": "NASDAQ",
+      "currency": "USD", "price": 189.30, "marketCap": 2950000000000, "high52w": 237.23, "abstand": 20.24, "rating": 7, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 160.58, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 48.2, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 31.4, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 28.5, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 24.1, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 7.2, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": 2.1, "unit": "%"},
+        "momentum": {"score": 1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 9.5, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 6.2, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.3, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "MSFT", "name": "Microsoft Corp.", "sector": "Technology", "exchange": "NASDAQ",
+      "currency": "USD", "price": 412.50, "marketCap": 3060000000000, "high52w": 468.35, "abstand": 11.94, "rating": 8, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 38.5, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 51.3, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 44.6, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 31.2, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 27.8, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 8.4, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 6.2, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 14.2, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 7.1, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.8, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "NOVO-B.CO", "name": "Novo Nordisk A/S", "sector": "Healthcare", "exchange": "OMXC",
+      "currency": "DKK", "price": 612.40, "marketCap": 380000000000, "high52w": 980.30, "abstand": 37.53, "rating": 6, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 82.3, "unit": "%"},
+        "eigenkapitalquote": {"score": 0, "value": 22.1, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 43.2, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 19.8, "unit": ""},
+        "kgv5Jahre": {"score": -1, "value": 18.5, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 12.3, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 8.7, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 22.4, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 8.9, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 2.3, "unit": "%"},
+        "kbv": {"score": -1, "value": 28.4, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "NESN.SW", "name": "Nestlé S.A.", "sector": "Consumer Defensive", "exchange": "SMI",
+      "currency": "CHF", "price": 76.80, "marketCap": 225000000000, "high52w": 102.40, "abstand": 25.00, "rating": 5, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 21.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 31.2, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 15.8, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 18.5, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 14.2, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 6.3, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": 1.2, "unit": "%"},
+        "momentum": {"score": 1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 0, "value": 3.1, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 5.8, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.5, "unit": "%"},
+        "kbv": {"score": 0, "value": 2.1, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "ASML.AS", "name": "ASML Holding N.V.", "sector": "Technology", "exchange": "AEX",
+      "currency": "EUR", "price": 612.20, "marketCap": 240000000000, "high52w": 1090.00, "abstand": 43.83, "rating": 7, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 55.2, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 44.8, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 32.1, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 29.3, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 24.6, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 9.2, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 7.1, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 18.4, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 6.7, "unit": "%"},
+        "quartalszahlen": {"score": -1, "value": -1.8, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "MC.PA", "name": "LVMH Moët Hennessy", "sector": "Consumer Cyclical", "exchange": "CAC 40",
+      "currency": "EUR", "price": 563.40, "marketCap": 282000000000, "high52w": 812.60, "abstand": 30.66, "rating": 4, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 18.7, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 36.4, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 19.3, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 19.8, "unit": ""},
+        "kgv5Jahre": {"score": -1, "value": 17.2, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 6.8, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": 2.4, "unit": "%"},
+        "momentum": {"score": 1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 0, "value": 4.2, "unit": "%"},
+        "gewinnrevision": {"score": -1, "value": -6.3, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 1.8, "unit": "%"},
+        "kbv": {"score": 0, "value": 2.3, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "SAP.DE", "name": "SAP SE", "sector": "Technology", "exchange": "DAX",
+      "currency": "EUR", "price": 232.80, "marketCap": 280000000000, "high52w": 265.40, "abstand": 12.29, "rating": 6, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 17.3, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 52.1, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 18.4, "unit": "%"},
+        "kgvAktuell": {"score": 0, "value": 25.6, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 23.1, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 7.4, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 5.9, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 12.3, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 5.6, "unit": "%"},
+        "quartalszahlen": {"score": -1, "value": -1.2, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "JNJ", "name": "Johnson & Johnson", "sector": "Healthcare", "exchange": "NYSE",
+      "currency": "USD", "price": 148.20, "marketCap": 356000000000, "high52w": 167.45, "abstand": 11.50, "rating": 3, "recommendation": "watch",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 0, "value": 14.2, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 28.6, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 24.1, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 14.8, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 13.2, "unit": ""},
+        "kursVs6M": {"score": 0, "value": 1.8, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": -2.1, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 0, "value": 3.4, "unit": "%"},
+        "gewinnrevision": {"score": 0, "value": 2.1, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 1.5, "unit": "%"},
+        "kbv": {"score": 0, "value": 6.8, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "BRK-B", "name": "Berkshire Hathaway B", "sector": "Financial", "exchange": "NYSE",
+      "currency": "USD", "price": 524.30, "marketCap": 762000000000, "high52w": 548.20, "abstand": 4.36, "rating": 2, "recommendation": "watch",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 0, "value": 12.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 42.1, "unit": "%"},
+        "ebitMarge": {"score": 0, "value": null, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 9.8, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 11.2, "unit": ""},
+        "kursVs6M": {"score": -1, "value": -6.2, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": 3.1, "unit": "%"},
+        "momentum": {"score": -1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 8.4, "unit": "%"},
+        "gewinnrevision": {"score": 0, "value": 1.2, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.4, "unit": "%"},
+        "kbv": {"score": 0, "value": 1.7, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "7203.T", "name": "Toyota Motor Corp.", "sector": "Consumer Cyclical", "exchange": "Nikkei",
+      "currency": "JPY", "price": 2680.0, "marketCap": 35000000000000, "high52w": 3788.0, "abstand": 29.25, "rating": 5, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 16.8, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 36.2, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 12.4, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 8.4, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 9.1, "unit": ""},
+        "kursVs6M": {"score": -1, "value": -8.2, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": -1.4, "unit": "%"},
+        "momentum": {"score": -1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 6.8, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 7.2, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.2, "unit": "%"},
+        "kbv": {"score": 0, "value": 1.2, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "NVDA", "name": "NVIDIA Corporation", "sector": "Technology", "exchange": "NASDAQ",
+      "currency": "USD", "price": 108.30, "marketCap": 2640000000000, "high52w": 153.13, "abstand": 29.28, "rating": 9, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 123.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 63.2, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 62.3, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 30.2, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 28.4, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 14.2, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 11.8, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 84.3, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 12.4, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 3.2, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "AMZN", "name": "Amazon.com Inc.", "sector": "Technology", "exchange": "NASDAQ",
+      "currency": "USD", "price": 192.40, "marketCap": 2040000000000, "high52w": 242.52, "abstand": 20.66, "rating": 7, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 24.6, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 46.8, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 11.4, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 32.1, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 24.8, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 9.3, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 6.7, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 22.1, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 8.4, "unit": "%"},
+        "quartalszahlen": {"score": -1, "value": -1.4, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "GOOGL", "name": "Alphabet Inc.", "sector": "Technology", "exchange": "NASDAQ",
+      "currency": "USD", "price": 163.40, "marketCap": 2010000000000, "high52w": 208.70, "abstand": 21.71, "rating": 8, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 30.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 68.3, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 27.8, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 18.4, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 21.2, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 8.1, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 7.2, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 15.4, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 6.8, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.9, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "ROG.SW", "name": "Roche Holding AG", "sector": "Healthcare", "exchange": "SMI",
+      "currency": "CHF", "price": 248.10, "marketCap": 210000000000, "high52w": 299.30, "abstand": 17.10, "rating": 3, "recommendation": "watch",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 38.4, "unit": "%"},
+        "eigenkapitalquote": {"score": -1, "value": 13.2, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 29.4, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 14.8, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 13.6, "unit": ""},
+        "kursVs6M": {"score": 0, "value": 2.4, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": -1.8, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 0, "value": 2.4, "unit": "%"},
+        "gewinnrevision": {"score": 0, "value": 1.8, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 1.2, "unit": "%"},
+        "kbv": {"score": 0, "value": 8.4, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "TTE.PA", "name": "TotalEnergies SE", "sector": "Energy", "exchange": "CAC 40",
+      "currency": "EUR", "price": 56.30, "marketCap": 132000000000, "high52w": 72.40, "abstand": 22.24, "rating": 4, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 16.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 29.4, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 14.2, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 7.4, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 8.2, "unit": ""},
+        "kursVs6M": {"score": -1, "value": -8.4, "unit": "%"},
+        "kursVs12M": {"score": -1, "value": -9.2, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": -1, "value": -8.4, "unit": "%"},
+        "gewinnrevision": {"score": -1, "value": -6.2, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 2.1, "unit": "%"},
+        "kbv": {"score": 1, "value": 0.9, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "TSM", "name": "Taiwan Semiconductor", "sector": "Technology", "exchange": "NYSE",
+      "currency": "USD", "price": 154.20, "marketCap": 798000000000, "high52w": 226.35, "abstand": 31.87, "rating": 8, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 28.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 54.2, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 46.8, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 17.8, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 19.4, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 11.2, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 8.4, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 32.4, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 9.2, "unit": "%"},
+        "quartalszahlen": {"score": -1, "value": -1.8, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "META", "name": "Meta Platforms Inc.", "sector": "Technology", "exchange": "NASDAQ",
+      "currency": "USD", "price": 568.90, "marketCap": 1430000000000, "high52w": 740.91, "abstand": 23.22, "rating": 9, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 37.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 72.3, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 42.1, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 24.8, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 21.4, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 13.4, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 9.8, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 18.4, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 8.6, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 2.4, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "BAS.DE", "name": "BASF SE", "sector": "Basic Materials", "exchange": "DAX",
+      "currency": "EUR", "price": 41.20, "marketCap": 37000000000, "high52w": 58.40, "abstand": 29.45, "rating": 0, "recommendation": "watch",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": -1, "value": 4.2, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 34.8, "unit": "%"},
+        "ebitMarge": {"score": 0, "value": 7.4, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 22.4, "unit": ""},
+        "kgv5Jahre": {"score": 0, "value": 14.8, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 8.4, "unit": "%"},
+        "kursVs12M": {"score": -1, "value": -8.2, "unit": "%"},
+        "momentum": {"score": 1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 0, "value": 2.4, "unit": "%"},
+        "gewinnrevision": {"score": -1, "value": -7.4, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": -0.8, "unit": "%"},
+        "kbv": {"score": 1, "value": 0.8, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "V", "name": "Visa Inc.", "sector": "Financial", "exchange": "NYSE",
+      "currency": "USD", "price": 337.40, "marketCap": 694000000000, "high52w": 366.80, "abstand": 8.02, "rating": 6, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 42.8, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 18.4, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 67.2, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 28.4, "unit": ""},
+        "kgv5Jahre": {"score": -1, "value": 24.6, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 7.4, "unit": "%"},
+        "kursVs12M": {"score": 1, "value": 5.8, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 12.4, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 6.2, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.8, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "BRNB.OL", "name": "Equinor ASA", "sector": "Energy", "exchange": "Oslo",
+      "currency": "NOK", "price": 252.40, "marketCap": 73000000000, "high52w": 312.90, "abstand": 19.33, "rating": 3, "recommendation": "watch",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 18.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 28.4, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 18.2, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 8.4, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 9.2, "unit": ""},
+        "kursVs6M": {"score": -1, "value": -9.4, "unit": "%"},
+        "kursVs12M": {"score": -1, "value": -10.2, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": -1, "value": -12.4, "unit": "%"},
+        "gewinnrevision": {"score": -1, "value": -8.4, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": -0.4, "unit": "%"},
+        "kbv": {"score": 1, "value": 1.4, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "SIE.DE", "name": "Siemens AG", "sector": "Industrials", "exchange": "DAX",
+      "currency": "EUR", "price": 198.30, "marketCap": 157000000000, "high52w": 232.80, "abstand": 14.82, "rating": 4, "recommendation": "buy",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 1, "value": 16.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 27.4, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 13.4, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 18.4, "unit": ""},
+        "kgv5Jahre": {"score": -1, "value": 16.8, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 7.4, "unit": "%"},
+        "kursVs12M": {"score": 0, "value": 2.4, "unit": "%"},
+        "momentum": {"score": 1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 1, "value": 8.4, "unit": "%"},
+        "gewinnrevision": {"score": 1, "value": 6.2, "unit": "%"},
+        "quartalszahlen": {"score": -1, "value": -1.4, "unit": "%"},
+        "kbv": {"score": 0, "value": 3.2, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "RELIANCE.NS", "name": "Reliance Industries", "sector": "Energy", "exchange": "NIFTY",
+      "currency": "INR", "price": 1248.40, "marketCap": 16800000000000, "high52w": 1608.95, "abstand": 22.41, "rating": 2, "recommendation": "watch",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 0, "value": 11.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 44.2, "unit": "%"},
+        "ebitMarge": {"score": 0, "value": 10.8, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": 24.4, "unit": ""},
+        "kgv5Jahre": {"score": -1, "value": 21.8, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 6.4, "unit": "%"},
+        "kursVs12M": {"score": -1, "value": -7.4, "unit": "%"},
+        "momentum": {"score": 1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 0, "value": 3.4, "unit": "%"},
+        "gewinnrevision": {"score": 0, "value": 2.4, "unit": "%"},
+        "quartalszahlen": {"score": 0, "value": 0.8, "unit": "%"},
+        "kbv": {"score": 0, "value": 2.4, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "INTC", "name": "Intel Corporation", "sector": "Technology", "exchange": "NASDAQ",
+      "currency": "USD", "price": 20.40, "marketCap": 87000000000, "high52w": 37.82, "abstand": 46.06, "rating": -3, "recommendation": "sell",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": -1, "value": -14.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 38.4, "unit": "%"},
+        "ebitMarge": {"score": -1, "value": -18.4, "unit": "%"},
+        "kgvAktuell": {"score": -1, "value": -1.0, "unit": ""},
+        "kgv5Jahre": {"score": -1, "value": -2.4, "unit": ""},
+        "kursVs6M": {"score": 1, "value": 8.4, "unit": "%"},
+        "kursVs12M": {"score": -1, "value": -48.2, "unit": "%"},
+        "momentum": {"score": 1, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": 0, "value": 4.4, "unit": "%"},
+        "gewinnrevision": {"score": 0, "value": 2.4, "unit": "%"},
+        "quartalszahlen": {"score": -1, "value": -2.4, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    },
+    {
+      "symbol": "BABA", "name": "Alibaba Group", "sector": "Technology", "exchange": "NYSE",
+      "currency": "USD", "price": 112.40, "marketCap": 265000000000, "high52w": 148.87, "abstand": 24.50, "rating": 1, "recommendation": "watch",
+      "details": {
+        "eigenkapitalrentabilitaet": {"score": 0, "value": 11.4, "unit": "%"},
+        "eigenkapitalquote": {"score": 1, "value": 52.4, "unit": "%"},
+        "ebitMarge": {"score": 1, "value": 14.4, "unit": "%"},
+        "kgvAktuell": {"score": 1, "value": 16.4, "unit": ""},
+        "kgv5Jahre": {"score": 1, "value": 14.8, "unit": ""},
+        "kursVs6M": {"score": -1, "value": -8.4, "unit": "%"},
+        "kursVs12M": {"score": -1, "value": -12.4, "unit": "%"},
+        "momentum": {"score": 0, "value": null, "unit": ""},
+        "gewinnwachstum": {"score": -1, "value": -8.4, "unit": "%"},
+        "gewinnrevision": {"score": -1, "value": -6.2, "unit": "%"},
+        "quartalszahlen": {"score": 1, "value": 2.4, "unit": "%"},
+        "kbv": {"score": 0, "value": null, "unit": ""}
+      },
+      "updatedAt": "2026-05-09T12:00:00"
+    }
+  ]
+}
