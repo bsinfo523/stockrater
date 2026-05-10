@@ -645,7 +645,17 @@
       .filter-row { padding: 0 12px 10px; }
       .results-info { padding: 0 12px 8px; }
     }
-  </style>
+  
+@media (max-width:700px){
+  .stock-card{grid-template-columns:auto 1fr auto auto!important;gap:10px!important;}
+  .abstand-col{display:flex!important;}
+  .toolbar select{width:100%;}
+}
+.filter-select{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px;color:var(--text);}
+.kz-help{font-size:12px;color:var(--text-s);margin-top:4px;line-height:1.4;}
+.history-box{margin-top:16px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);}
+
+</style>
 </head>
 <body>
 
@@ -856,10 +866,10 @@ function applyFilters() {
     switch (currentSort) {
       case 'rating':    return (b.rating ?? -99) - (a.rating ?? -99);
       case 'abstand':   return (b.abstand ?? -1) - (a.abstand ?? -1);
-      case 'price_asc': return (a.price ?? 0) - (b.price ?? 0);
-      case 'price_desc':return (b.price ?? 0) - (a.price ?? 0);
+      case 'price_asc': return (a.price_eur ?? 0) - (b.price_eur ?? 0);
+      case 'price_desc':return (b.price_eur ?? 0) - (a.price_eur ?? 0);
       case 'name':      return a.name.localeCompare(b.name, 'de');
-      case 'marketcap': return (b.marketCap ?? 0) - (a.marketCap ?? 0);
+      case 'marketcap': return (b.marketCap_eur ?? 0) - (a.marketCap_eur ?? 0);
       default:          return 0;
     }
   });
@@ -955,7 +965,7 @@ function renderCard(s) {
       <div class="metric-label">Abstand</div>
     </div>
     <div class="metric">
-      <div class="metric-value">${fmtCurrency(s.price, s.currency)}</div>
+      <div class="metric-value">${fmtCurrency(s.price_eur || s.price, 'EUR')}</div>
       <div class="metric-label">Kurs</div>
     </div>
     <button class="watchlist-btn ${starred ? 'starred' : ''}" data-symbol="${s.symbol}" title="Merkliste">
@@ -998,7 +1008,7 @@ function openDetail(symbol, scrollToRating=false) {
       <div class="kz-score ${scoreClass}">${scoreLabel}</div>
       <div class="kz-info">
         <div class="kz-name">${KZ_LABELS[key] || key}</div>
-        <div class="kz-value">${valStr}</div>
+        <div class="kz-value">${valStr}</div><div class='kz-help'>Diese Kennzahl hilft Anfängern einzuschätzen, ob ein Unternehmen finanziell stark oder schwach ist.</div>
       </div>
     </div>`;
   }).join('');
@@ -1018,7 +1028,7 @@ function openDetail(symbol, scrollToRating=false) {
 
     <div class="detail-stats">
       <div class="ds-item">
-        <div class="ds-value">${s.price != null ? s.price.toFixed(2) + ' ' + (s.currency||'') : '–'}</div>
+        <div class="ds-value">${s.price_eur != null ? s.price_eur.toFixed(2) + ' EUR' : '–'}</div>
         <div class="ds-label">Kurs</div>
       </div>
       <div class="ds-item">
@@ -1026,7 +1036,7 @@ function openDetail(symbol, scrollToRating=false) {
         <div class="ds-label">Abstand</div>
       </div>
       <div class="ds-item">
-        <div class="ds-value">${fmtBig(s.marketCap)}</div>
+        <div class="ds-value">${fmtBig(s.marketCap_eur || s.marketCap)} + ' EUR'</div>
         <div class="ds-label">Marktkapital.</div>
       </div>
       <div class="ds-item">
@@ -1047,7 +1057,7 @@ function openDetail(symbol, scrollToRating=false) {
       <div class="score-labels"><span>−12</span><span>0</span><span>+12</span></div>
     </div>
 
-    <div class="detail-section-title">Die 12 Kennzahlen</div>
+    <div class='history-box'><strong>Originalkurs:</strong> ${s.price != null ? s.price.toFixed(2) + ' ' + (s.currency||'') : '–'}<br><strong>Original MarketCap:</strong> ${fmtBig(s.marketCap)}<br><small>Alle Werte oben wurden automatisch in Euro umgerechnet, damit Aktien weltweit fair verglichen werden können.</small></div><div class="detail-section-title">Die 12 Kennzahlen</div>
     <div class="kennzahl-list">${kzRows}</div>
   `;
 
