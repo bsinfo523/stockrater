@@ -2,8 +2,8 @@ name: Aktien-Daten aktualisieren
 
 on:
   schedule:
-    - cron: '30 22 * * 1-5'
-  workflow_dispatch:
+    - cron: '0 20 * * 1-5'   # Mo–Fr um 21:00 Uhr (nach Börsenschluss Europa)
+  workflow_dispatch:           # Manuell ausführbar per Knopfdruck
 
 permissions:
   contents: write
