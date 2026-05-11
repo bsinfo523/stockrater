@@ -1,0 +1,12 @@
+# StockRater – Manuelle Aktien
+# ================================
+# Ein Symbol pro Zeile.
+# Format: SYMBOL  oder  SYMBOL;Name;Sektor;Börse
+#
+# Beispiele:
+# AAPL
+# SAP.DE;SAP SE;Technology;DAX
+# 0700.HK;Tencent Holdings;Technology;HSI
+#
+# Symbole findest du auf finance.yahoo.com (Suchfeld)
+# ────────────────────────────────────────────────────
