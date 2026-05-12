@@ -419,7 +419,7 @@ function toast(msg, dur=2500) {
 // ═══════════════════════════════════════════
 async function loadData() {
   try {
-    const res  = await fetch('stocks.json?' + Date.now());
+    const res  = await fetch('./stocks.json?' + Date.now());
     if (!res.ok) throw new Error();
     const data = await res.json();
     allStocks  = data.stocks || [];
