@@ -10,3 +10,5 @@
 #
 # Symbole findest du auf finance.yahoo.com (Suchfeld)
 # ────────────────────────────────────────────────────
+
+D7G;Nel ASA;Energy;OSE
