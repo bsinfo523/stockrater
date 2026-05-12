@@ -218,7 +218,7 @@
     {
       "symbol": "INGA.AS",
       "name": "ING GROEP N.V.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 25.72,
@@ -304,8 +304,8 @@
     },
     {
       "symbol": "BGEO.L",
-      "name": "LION FINANCE GROUP PLC ORD 1P",
-      "sector": "Financial Services",
+      "name": "LION FInullCE GROUP PLC ORD 1P",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 10860.0,
@@ -827,7 +827,7 @@
     {
       "symbol": "GL",
       "name": "Globe Life Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 153.86,
@@ -1001,7 +1001,7 @@
     {
       "symbol": "USB",
       "name": "U.S. Bancorp",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 54.49,
@@ -1175,7 +1175,7 @@
     {
       "symbol": "SAN.MC",
       "name": "BANCO SANTANDER S.A.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 10.42,
@@ -1262,7 +1262,7 @@
     {
       "symbol": "UCG.MI",
       "name": "UNICREDIT",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 70.73,
@@ -1697,7 +1697,7 @@
     {
       "symbol": "QBE.AX",
       "name": "QBE INSUR. FPO [QBE]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 22.35,
@@ -2132,7 +2132,7 @@
     {
       "symbol": "IVZ",
       "name": "Invesco Ltd",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 27.99,
@@ -2566,8 +2566,8 @@
     },
     {
       "symbol": "PNC",
-      "name": "PNC Financial Services Group, I",
-      "sector": "Financial Services",
+      "name": "PNC Finullcial Services Group, I",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 214.59,
@@ -2915,7 +2915,7 @@
     {
       "symbol": "ALV.DE",
       "name": "Allianz SE                    v",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "DAX",
       "currency": "EUR",
       "priceOrig": 371.7,
@@ -3089,7 +3089,7 @@
     {
       "symbol": "BBVA.MC",
       "name": "BANCO BILBAO VIZCAYA ARGENTARIA",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 18.76,
@@ -3176,7 +3176,7 @@
     {
       "symbol": "BNP.PA",
       "name": "BNP PARIBAS ACT.A",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 92.96,
@@ -3263,7 +3263,7 @@
     {
       "symbol": "ISP.MI",
       "name": "INTESA SANPAOLO",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 5.86,
@@ -3524,7 +3524,7 @@
     {
       "symbol": "PRU.L",
       "name": "PRUDENTIAL PLC ORD 5P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1143.0,
@@ -3698,7 +3698,7 @@
     {
       "symbol": "STAN.L",
       "name": "STANDARD CHARTERED PLC ORD USD0",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1866.0,
@@ -3785,7 +3785,7 @@
     {
       "symbol": "GLE.PA",
       "name": "SOCIETE GENERALE",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "CAC 40",
       "currency": "EUR",
       "priceOrig": 69.39,
@@ -3959,7 +3959,7 @@
     {
       "symbol": "BKT.MC",
       "name": "BANKINTER, S.A.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "IBEX 35",
       "currency": "EUR",
       "priceOrig": 13.9,
@@ -4046,7 +4046,7 @@
     {
       "symbol": "CABK.MC",
       "name": "CAIXABANK, S.A.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "IBEX 35",
       "currency": "EUR",
       "priceOrig": 10.74,
@@ -4307,7 +4307,7 @@
     {
       "symbol": "BFL.AX",
       "name": "BSP F GRP FPO [BFL]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 8.42,
@@ -4655,7 +4655,7 @@
     {
       "symbol": "SOL.AX",
       "name": "SOUL W.H. FPO [SOL]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 44.18,
@@ -4916,7 +4916,7 @@
     {
       "symbol": "TD.TO",
       "name": "TORONTO-DOMINION BANK",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 146.43,
@@ -5044,12 +5044,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -5131,12 +5131,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -5218,12 +5218,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -5305,12 +5305,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -5699,7 +5699,7 @@
     {
       "symbol": "C",
       "name": "Citigroup, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 125.85,
@@ -5785,8 +5785,8 @@
     },
     {
       "symbol": "CFG",
-      "name": "Citizens Financial Group, Inc.",
-      "sector": "Financial Services",
+      "name": "Citizens Finullcial Group, Inc.",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 62.16,
@@ -6221,7 +6221,7 @@
     {
       "symbol": "KEY",
       "name": "KeyCorp",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 21.31,
@@ -6394,8 +6394,8 @@
     },
     {
       "symbol": "PFG",
-      "name": "Principal Financial Group Inc",
-      "sector": "Financial Services",
+      "name": "Principal Finullcial Group Inc",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 100.19,
@@ -6481,8 +6481,8 @@
     },
     {
       "symbol": "RF",
-      "name": "Regions Financial Corporation",
-      "sector": "Financial Services",
+      "name": "Regions Finullcial Corporation",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 26.83,
@@ -7265,7 +7265,7 @@
     {
       "symbol": "CBK.DE",
       "name": "Commerzbank AG                I",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "DAX",
       "currency": "EUR",
       "priceOrig": 35.97,
@@ -7526,7 +7526,7 @@
     {
       "symbol": "TLX.DE",
       "name": "Talanx AG                     N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "MDAX",
       "currency": "EUR",
       "priceOrig": 106.6,
@@ -7700,7 +7700,7 @@
     {
       "symbol": "CS.PA",
       "name": "AXA",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 39.5,
@@ -7787,7 +7787,7 @@
     {
       "symbol": "BARC.L",
       "name": "BARCLAYS PLC ORD 25P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 429.1,
@@ -8048,7 +8048,7 @@
     {
       "symbol": "LLOY.L",
       "name": "LLOYDS BANKING GROUP PLC ORD 10",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 98.34,
@@ -8222,7 +8222,7 @@
     {
       "symbol": "MAP.MC",
       "name": "MAPFRE, S.A.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "IBEX 35",
       "currency": "EUR",
       "priceOrig": 4.23,
@@ -8831,7 +8831,7 @@
     {
       "symbol": "BNS.TO",
       "name": "BANK OF NOVA SCOTIA",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 105.43,
@@ -9133,12 +9133,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -9353,7 +9353,7 @@
     {
       "symbol": "ALL",
       "name": "Allstate Corporation (The)",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 213.8,
@@ -9527,7 +9527,7 @@
     {
       "symbol": "ACGL",
       "name": "Arch Capital Group Ltd.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 93.83,
@@ -9614,7 +9614,7 @@
     {
       "symbol": "AIZ",
       "name": "Assurant, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 244.14,
@@ -9874,7 +9874,7 @@
     },
     {
       "symbol": "BR",
-      "name": "Broadridge Financial Solutions,",
+      "name": "Broadridge Finullcial Solutions,",
       "sector": "Technology",
       "exchange": "S&P 500",
       "currency": "USD",
@@ -9962,7 +9962,7 @@
     {
       "symbol": "CB",
       "name": "Chubb Limited",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 320.26,
@@ -10310,7 +10310,7 @@
     {
       "symbol": "EG",
       "name": "Everest Group, Ltd.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 350.78,
@@ -10397,7 +10397,7 @@
     {
       "symbol": "BEN",
       "name": "Franklin Resources, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 31.55,
@@ -11441,7 +11441,7 @@
     {
       "symbol": "MTB",
       "name": "M&T Bank Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 207.98,
@@ -12224,7 +12224,7 @@
     {
       "symbol": "TRV",
       "name": "The Travelers Companies, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 297.13,
@@ -12310,8 +12310,8 @@
     },
     {
       "symbol": "TFC",
-      "name": "Truist Financial Corporation",
-      "sector": "Financial Services",
+      "name": "Truist Finullcial Corporation",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 47.97,
@@ -12572,7 +12572,7 @@
     {
       "symbol": "HNR1.DE",
       "name": "HANNOVER RUECK SE NA O.N.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "DAX",
       "currency": "EUR",
       "priceOrig": 238.2,
@@ -12833,7 +12833,7 @@
     {
       "symbol": "III.L",
       "name": "3I GROUP PLC ORD 73 19/22P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 2516.0,
@@ -13181,7 +13181,7 @@
     {
       "symbol": "HSX.L",
       "name": "HISCOX LTD ORD 6.5P (DI)",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1625.0,
@@ -13268,7 +13268,7 @@
     {
       "symbol": "IGG.L",
       "name": "IG GROUP HOLDINGS PLC ORD 0.005",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1532.0,
@@ -13442,7 +13442,7 @@
     {
       "symbol": "SDLF.L",
       "name": "STANDARD LIFE PLC ORD 10P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 763.5,
@@ -14138,7 +14138,7 @@
     {
       "symbol": "UBSG.SW",
       "name": "UBS GROUP N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "SMI",
       "currency": "CHF",
       "priceOrig": 35.04,
@@ -14312,7 +14312,7 @@
     {
       "symbol": "CGF.AX",
       "name": "CHALLENGER FPO [CGF]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 8.85,
@@ -14747,7 +14747,7 @@
     {
       "symbol": "IFL.AX",
       "name": "INSIGNIA FPO [IFL]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 4.79,
@@ -14834,7 +14834,7 @@
     {
       "symbol": "LSF.AX",
       "name": "L1 LS FUND FPO [LSF]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 4.41,
@@ -15269,7 +15269,7 @@
     {
       "symbol": "CM.TO",
       "name": "CANADIAN IMPERIAL BANK OF COMME",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 151.77,
@@ -15571,12 +15571,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -15658,12 +15658,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -16313,7 +16313,7 @@
     {
       "symbol": "BK",
       "name": "The Bank of New York Mellon Cor",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 132.49,
@@ -17705,7 +17705,7 @@
     {
       "symbol": "HIG",
       "name": "The Hartford Insurance Group, I",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 132.11,
@@ -19097,7 +19097,7 @@
     {
       "symbol": "MS",
       "name": "Morgan Stanley",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 191.1,
@@ -19271,7 +19271,7 @@
     {
       "symbol": "NTRS",
       "name": "Northern Trust Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 161.0,
@@ -19879,8 +19879,8 @@
     },
     {
       "symbol": "SYF",
-      "name": "Synchrony Financial",
-      "sector": "Financial Services",
+      "name": "Synchrony Finullcial",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 70.28,
@@ -20402,7 +20402,7 @@
     {
       "symbol": "WFC",
       "name": "Wells Fargo & Company",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 73.58,
@@ -20750,7 +20750,7 @@
     {
       "symbol": "DBK.DE",
       "name": "DEUTSCHE BANK AG              N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "DAX",
       "currency": "EUR",
       "priceOrig": 27.1,
@@ -22403,7 +22403,7 @@
     {
       "symbol": "HSBA.L",
       "name": "HSBC HOLDINGS PLC ORD $0.50 (UK",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1330.4,
@@ -22490,7 +22490,7 @@
     {
       "symbol": "ICG.L",
       "name": "ICG PLC ORD 26 1/4P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1905.0,
@@ -22751,7 +22751,7 @@
     {
       "symbol": "MNG.L",
       "name": "M&G PLC",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 306.0,
@@ -22838,7 +22838,7 @@
     {
       "symbol": "NWG.L",
       "name": "NATWEST GROUP PLC ORD 107.69P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 581.4,
@@ -23099,7 +23099,7 @@
     {
       "symbol": "SDR.L",
       "name": "SCHRODERS PLC ORD 20P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 581.0,
@@ -23447,7 +23447,7 @@
     {
       "symbol": "ACA.PA",
       "name": "CREDIT AGRICOLE",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "CAC 40",
       "currency": "EUR",
       "priceOrig": 17.15,
@@ -23795,7 +23795,7 @@
     {
       "symbol": "UNI.MC",
       "name": "UNICAJA BANCO, S.A.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "IBEX 35",
       "currency": "EUR",
       "priceOrig": 2.76,
@@ -24143,7 +24143,7 @@
     {
       "symbol": "SREN.SW",
       "name": "SWISS RE N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "SMI",
       "currency": "CHF",
       "priceOrig": 124.1,
@@ -24839,7 +24839,7 @@
     {
       "symbol": "GQG.AX",
       "name": "GQGPARTNRS CDI FORUS [GQG]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 1.57,
@@ -24926,7 +24926,7 @@
     {
       "symbol": "L1G.AX",
       "name": "L1 GROUP FPO [L1G]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 1.22,
@@ -25448,7 +25448,7 @@
     {
       "symbol": "BMO.TO",
       "name": "BANK OF MONTREAL",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 209.38,
@@ -25796,7 +25796,7 @@
     {
       "symbol": "RY.TO",
       "name": "ROYAL BANK OF CANADA",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 247.37,
@@ -25970,7 +25970,7 @@
     {
       "symbol": "AXISBANK.NS",
       "name": "AXIS BANK LIMITED",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 1272.3,
@@ -26011,12 +26011,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -26057,7 +26057,7 @@
     {
       "symbol": "0005.HK",
       "name": "HSBC HOLDINGS",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "HSI",
       "currency": "HKD",
       "priceOrig": 141.2,
@@ -26144,7 +26144,7 @@
     {
       "symbol": "2318.HK",
       "name": "PING AN",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "HSI",
       "currency": "HKD",
       "priceOrig": 65.05,
@@ -26578,8 +26578,8 @@
     },
     {
       "symbol": "AMP",
-      "name": "Ameriprise Financial, Inc.",
-      "sector": "Financial Services",
+      "name": "Ameriprise Finullcial, Inc.",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 463.7,
@@ -26927,7 +26927,7 @@
     {
       "symbol": "BAC",
       "name": "Bank of America Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 50.55,
@@ -27275,7 +27275,7 @@
     {
       "symbol": "CBOE",
       "name": "Cboe Global Markets, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 350.48,
@@ -28145,7 +28145,7 @@
     {
       "symbol": "GS",
       "name": "Goldman Sachs Group, Inc. (The)",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 944.86,
@@ -28580,7 +28580,7 @@
     {
       "symbol": "IBKR",
       "name": "Interactive Brokers Group, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 84.91,
@@ -29362,8 +29362,8 @@
     },
     {
       "symbol": "RJF",
-      "name": "Raymond James Financial, Inc.",
-      "sector": "Financial Services",
+      "name": "Raymond James Finullcial, Inc.",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 151.04,
@@ -31190,7 +31190,7 @@
     {
       "symbol": "BEZ.L",
       "name": "BEAZLEY PLC ORD 5P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1279.5,
@@ -31538,7 +31538,7 @@
     {
       "symbol": "PSH.L",
       "name": "PERSHING SQUARE HOLDINGS LTD OR",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 4168.0,
@@ -31799,7 +31799,7 @@
     {
       "symbol": "EDEN.PA",
       "name": "EDENRED",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "CAC 40",
       "currency": "EUR",
       "priceOrig": 21.27,
@@ -32843,7 +32843,7 @@
     {
       "symbol": "PPT.AX",
       "name": "PERPETUAL FPO [PPT]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 16.72,
@@ -32930,7 +32930,7 @@
     {
       "symbol": "SDF.AX",
       "name": "STEADFAST FPO [SDF]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 4.07,
@@ -33626,7 +33626,7 @@
     {
       "symbol": "ICICIBANK.NS",
       "name": "ICICI BANK LTD.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 1266.4,
@@ -33667,12 +33667,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -33713,7 +33713,7 @@
     {
       "symbol": "KOTAKBANK.NS",
       "name": "KOTAK MAHINDRA BANK LTD",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 381.05,
@@ -33754,12 +33754,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -33800,7 +33800,7 @@
     {
       "symbol": "SBIN.NS",
       "name": "STATE BANK OF INDIA",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 973.6,
@@ -33841,12 +33841,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -33887,7 +33887,7 @@
     {
       "symbol": "1299.HK",
       "name": "AIA",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "HSI",
       "currency": "HKD",
       "priceOrig": 86.6,
@@ -34061,7 +34061,7 @@
     {
       "symbol": "AFL",
       "name": "AFLAC Incorporated",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 115.48,
@@ -34409,7 +34409,7 @@
     {
       "symbol": "AIG",
       "name": "American International Group, I",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 76.06,
@@ -35017,8 +35017,8 @@
     },
     {
       "symbol": "CINF",
-      "name": "Cincinnati Financial Corporatio",
-      "sector": "Financial Services",
+      "name": "Cincinnati Finullcial Corporatio",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 163.33,
@@ -36062,7 +36062,7 @@
     {
       "symbol": "FISV",
       "name": "Fiserv, Inc.",
-      "sector": "Financials",
+      "sector": "Finullcials",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 54.39,
@@ -36584,7 +36584,7 @@
     {
       "symbol": "JPM",
       "name": "JP Morgan Chase & Co.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 300.0,
@@ -36845,7 +36845,7 @@
     {
       "symbol": "MET",
       "name": "MetLife, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 77.98,
@@ -37454,7 +37454,7 @@
     {
       "symbol": "PGR",
       "name": "Progressive Corporation (The)",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 196.91,
@@ -37715,7 +37715,7 @@
     {
       "symbol": "STT",
       "name": "State Street Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 150.17,
@@ -37802,7 +37802,7 @@
     {
       "symbol": "TROW",
       "name": "T. Rowe Price Group, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 104.75,
@@ -38150,7 +38150,7 @@
     {
       "symbol": "WTW",
       "name": "Willis Towers Watson Public Lim",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 249.72,
@@ -38324,7 +38324,7 @@
     {
       "symbol": "DB1.DE",
       "name": "DEUTSCHE BOERSE AG            N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "DAX",
       "currency": "EUR",
       "priceOrig": 248.0,
@@ -38933,7 +38933,7 @@
     {
       "symbol": "NDA-FI.HE",
       "name": "Nordea Bank Abp",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "EURO STOXX 50",
       "currency": "EUR",
       "priceOrig": 15.58,
@@ -38974,12 +38974,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -39542,7 +39542,7 @@
     {
       "symbol": "LGEN.L",
       "name": "LEGAL & GENERAL GROUP PLC ORD 2",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 250.3,
@@ -40499,7 +40499,7 @@
     {
       "symbol": "ABN.AS",
       "name": "ABN AMRO BANK N.V.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "AEX",
       "currency": "EUR",
       "priceOrig": 29.89,
@@ -40586,7 +40586,7 @@
     {
       "symbol": "AGN.AS",
       "name": "AEGON",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "AEX",
       "currency": "EUR",
       "priceOrig": 7.21,
@@ -40673,7 +40673,7 @@
     {
       "symbol": "ZURN.SW",
       "name": "ZURICH INSURANCE N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "SMI",
       "currency": "CHF",
       "priceOrig": 546.4,
@@ -41630,7 +41630,7 @@
     {
       "symbol": "MFF.AX",
       "name": "MFFCAPITAL FPO [MFF]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 4.87,
@@ -41717,7 +41717,7 @@
     {
       "symbol": "MQG.AX",
       "name": "MACQ GROUP FPO [MQG]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 239.34,
@@ -43022,7 +43022,7 @@
     {
       "symbol": "WLE.AX",
       "name": "WAMLEADERS FPO [WLE]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 1.31,
@@ -43282,8 +43282,8 @@
     },
     {
       "symbol": "IFC.TO",
-      "name": "INTACT FINANCIAL CORPORATION",
-      "sector": "Financial Services",
+      "name": "INTACT FInullCIAL CORPORATION",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 253.33,
@@ -43411,12 +43411,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -43498,12 +43498,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -43544,7 +43544,7 @@
     {
       "symbol": "HDFCBANK.NS",
       "name": "HDFC BANK LTD",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 763.65,
@@ -43585,12 +43585,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -43672,12 +43672,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -43759,12 +43759,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -43804,8 +43804,8 @@
     },
     {
       "symbol": "SHRIRAMFIN.NS",
-      "name": "SHRIRAM FINANCE LIMITED",
-      "sector": "Financial Services",
+      "name": "SHRIRAM FInullCE LIMITED",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 975.95,
@@ -43846,12 +43846,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -43933,12 +43933,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -44020,12 +44020,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -44153,7 +44153,7 @@
     {
       "symbol": "0388.HK",
       "name": "HKEX",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "HSI",
       "currency": "HKD",
       "priceOrig": 425.4,
@@ -44762,7 +44762,7 @@
     {
       "symbol": "BRK-B",
       "name": "Berkshire Hathaway Inc. New",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 479.55,
@@ -48329,7 +48329,7 @@
     {
       "symbol": "WRB",
       "name": "W.R. Berkley Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 66.41,
@@ -50330,7 +50330,7 @@
     {
       "symbol": "AV.L",
       "name": "AVIVA PLC ORD 32 17/19P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 630.0,
@@ -51113,7 +51113,7 @@
     {
       "symbol": "STJ.L",
       "name": "ST. JAMES'S PLACE PLC ORD 15P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 1207.0,
@@ -51983,7 +51983,7 @@
     {
       "symbol": "ASRNL.AS",
       "name": "ASR NEDERLAND",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "AEX",
       "currency": "EUR",
       "priceOrig": 66.26,
@@ -52157,7 +52157,7 @@
     {
       "symbol": "NN.AS",
       "name": "NN GROUP",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "AEX",
       "currency": "EUR",
       "priceOrig": 76.2,
@@ -52505,7 +52505,7 @@
     {
       "symbol": "ARG.AX",
       "name": "ARGO FPO [ARG]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 8.82,
@@ -52679,7 +52679,7 @@
     {
       "symbol": "AUB.AX",
       "name": "AUB GROUP FPO [AUB]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 24.19,
@@ -52766,7 +52766,7 @@
     {
       "symbol": "BEN.AX",
       "name": "BEN ADE BK FPO [BEN]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 10.63,
@@ -52940,7 +52940,7 @@
     {
       "symbol": "MFG.AX",
       "name": "MAG FINC FPO [MFG]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 8.87,
@@ -53984,7 +53984,7 @@
     {
       "symbol": "WBC.AX",
       "name": "WESTPAC FPO [WBC]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 37.12,
@@ -54070,8 +54070,8 @@
     },
     {
       "symbol": "FFH.TO",
-      "name": "FAIRFAX FINANCIAL HOLDINGS LTD.",
-      "sector": "Financial Services",
+      "name": "FAIRFAX FInullCIAL HOLDINGS LTD.",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 2257.83,
@@ -54460,12 +54460,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -54547,12 +54547,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -54591,9 +54591,9 @@
       ]
     },
     {
-      "symbol": "BAJFINANCE.NS",
-      "name": "BAJAJ FINANCE LIMITED",
-      "sector": "Financial Services",
+      "symbol": "BAJFInullCE.NS",
+      "name": "BAJAJ FInullCE LIMITED",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 936.05,
@@ -54634,12 +54634,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -54721,12 +54721,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -54808,12 +54808,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -54895,12 +54895,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -54982,12 +54982,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -55069,12 +55069,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -55156,12 +55156,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -55243,12 +55243,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -55330,12 +55330,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -55417,12 +55417,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -55504,12 +55504,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -55550,7 +55550,7 @@
     {
       "symbol": "AXP",
       "name": "American Express Company",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 312.32,
@@ -55637,7 +55637,7 @@
     {
       "symbol": "AON",
       "name": "Aon plc",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 312.07,
@@ -56159,7 +56159,7 @@
     {
       "symbol": "SCHW",
       "name": "Charles Schwab Corporation (The",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 87.83,
@@ -57203,7 +57203,7 @@
     {
       "symbol": "ERIE",
       "name": "Erie Indemnity Company",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 217.09,
@@ -57464,7 +57464,7 @@
     {
       "symbol": "FDS",
       "name": "FactSet Research Systems Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 219.19,
@@ -57551,7 +57551,7 @@
     {
       "symbol": "FITB",
       "name": "Fifth Third Bancorp",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 48.65,
@@ -59117,7 +59117,7 @@
     {
       "symbol": "MSCI",
       "name": "MSCI Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 584.63,
@@ -59465,7 +59465,7 @@
     {
       "symbol": "PYPL",
       "name": "PayPal Holdings, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 45.07,
@@ -59812,8 +59812,8 @@
     },
     {
       "symbol": "PRU",
-      "name": "Prudential Financial, Inc.",
-      "sector": "Financial Services",
+      "name": "Prudential Finullcial, Inc.",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 101.12,
@@ -61727,7 +61727,7 @@
     {
       "symbol": "MUV2.DE",
       "name": "MUENCHENER RUECKVERS.-GES. AG N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "DAX",
       "currency": "EUR",
       "priceOrig": 499.3,
@@ -63815,7 +63815,7 @@
     {
       "symbol": "PGHN.SW",
       "name": "PARTNERS GROUP N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "SMI",
       "currency": "CHF",
       "priceOrig": 885.2,
@@ -64163,7 +64163,7 @@
     {
       "symbol": "ANZ.AX",
       "name": "ANZ GROUP FPO [ANZ]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 35.9,
@@ -64946,7 +64946,7 @@
     {
       "symbol": "MXT.AX",
       "name": "METMASTER ORD UNITS [MXT]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 1.92,
@@ -65555,7 +65555,7 @@
     {
       "symbol": "ZIP.AX",
       "name": "ZIPCOLTD FPO [ZIP]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 2.6,
@@ -65989,8 +65989,8 @@
     },
     {
       "symbol": "SLF.TO",
-      "name": "SUN LIFE FINANCIAL INC.",
-      "sector": "Financial Services",
+      "name": "SUN LIFE FInullCIAL INC.",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 96.35,
@@ -66118,12 +66118,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -66164,7 +66164,7 @@
     {
       "symbol": "BAJAJFINSV.NS",
       "name": "BAJAJ FINSERV LTD.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 1794.2,
@@ -66205,12 +66205,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -66292,12 +66292,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -66686,7 +66686,7 @@
     {
       "symbol": "AJG",
       "name": "Arthur J. Gallagher & Co.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 198.57,
@@ -67207,8 +67207,8 @@
     },
     {
       "symbol": "COF",
-      "name": "Capital One Financial Corporati",
-      "sector": "Financial Services",
+      "name": "Capital One Finullcial Corporati",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 183.93,
@@ -67556,7 +67556,7 @@
     {
       "symbol": "CME",
       "name": "CME Group Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 282.58,
@@ -68861,7 +68861,7 @@
     {
       "symbol": "ICE",
       "name": "Intercontinental Exchange Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 157.82,
@@ -69035,7 +69035,7 @@
     {
       "symbol": "MA",
       "name": "Mastercard Incorporated",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 497.81,
@@ -69122,7 +69122,7 @@
     {
       "symbol": "MCO",
       "name": "Moody's Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 448.39,
@@ -69209,7 +69209,7 @@
     {
       "symbol": "NDAQ",
       "name": "Nasdaq, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 88.48,
@@ -70688,7 +70688,7 @@
     {
       "symbol": "V",
       "name": "Visa Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 323.86,
@@ -74429,7 +74429,7 @@
     {
       "symbol": "SAB.MC",
       "name": "BANCO DE SABADELL",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "IBEX 35",
       "currency": "EUR",
       "priceOrig": 3.28,
@@ -74777,7 +74777,7 @@
     {
       "symbol": "SLHN.SW",
       "name": "SWISS LIFE HOLDING AG N",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "SMI",
       "currency": "CHF",
       "priceOrig": 853.2,
@@ -74951,7 +74951,7 @@
     {
       "symbol": "AMP.AX",
       "name": "AMP FPO [AMP]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 1.52,
@@ -75125,7 +75125,7 @@
     {
       "symbol": "ASX.AX",
       "name": "ASX FPO [ASX]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 58.16,
@@ -75647,7 +75647,7 @@
     {
       "symbol": "HUB.AX",
       "name": "HUB24LTD FPO [HUB]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 81.68,
@@ -76430,7 +76430,7 @@
     {
       "symbol": "BAM.TO",
       "name": "BROOKFIELD ASSET MANAGEMENT LTD",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 66.82,
@@ -76778,7 +76778,7 @@
     {
       "symbol": "POW.TO",
       "name": "POWER CORPORATION OF CANADA, SV",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 78.44,
@@ -77167,12 +77167,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -77254,12 +77254,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -77341,12 +77341,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -78083,7 +78083,7 @@
     {
       "symbol": "ARES",
       "name": "Ares Management Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 124.61,
@@ -78257,7 +78257,7 @@
     {
       "symbol": "BLK",
       "name": "BlackRock, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 1081.32,
@@ -78344,7 +78344,7 @@
     {
       "symbol": "BRO",
       "name": "Brown & Brown, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 55.35,
@@ -79388,7 +79388,7 @@
     {
       "symbol": "HBAN",
       "name": "Huntington Bancshares Incorpora",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 15.96,
@@ -80345,7 +80345,7 @@
     {
       "symbol": "HOOD",
       "name": "Robinhood Markets, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 80.78,
@@ -80519,7 +80519,7 @@
     {
       "symbol": "SPGI",
       "name": "S&P Global Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 421.0,
@@ -82433,7 +82433,7 @@
     {
       "symbol": "LSEG.L",
       "name": "LONDON STOCK EXCHANGE GROUP PLC",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 9020.0,
@@ -83564,7 +83564,7 @@
     {
       "symbol": "CBA.AX",
       "name": "CWLTH BANK FPO [CBA]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 174.01,
@@ -83651,7 +83651,7 @@
     {
       "symbol": "CPU.AX",
       "name": "CSHARE FPO [CPU]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 30.56,
@@ -83999,7 +83999,7 @@
     {
       "symbol": "IAG.AX",
       "name": "INSUR.AUST FPO [IAG]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 7.32,
@@ -84521,7 +84521,7 @@
     {
       "symbol": "NAB.AX",
       "name": "NAT. BANK FPO [NAB]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 38.22,
@@ -84608,7 +84608,7 @@
     {
       "symbol": "NHF.AX",
       "name": "NIBHOLDING FPO [NHF]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 6.6,
@@ -85304,7 +85304,7 @@
     {
       "symbol": "WAM.AX",
       "name": "WAMCAPITAL FPO [WAM]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 1.73,
@@ -85391,7 +85391,7 @@
     {
       "symbol": "BN.TO",
       "name": "BROOKFIELD CORPORATION",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 63.32,
@@ -85739,7 +85739,7 @@
     {
       "symbol": "MFC.TO",
       "name": "MANULIFE FIN",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "TSX",
       "currency": "CAD",
       "priceOrig": 54.66,
@@ -85867,12 +85867,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -85954,12 +85954,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -86000,7 +86000,7 @@
     {
       "symbol": "HDFCLIFE.NS",
       "name": "HDFC LIFE INS CO LTD",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 622.7,
@@ -86041,12 +86041,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -86087,7 +86087,7 @@
     {
       "symbol": "SBILIFE.NS",
       "name": "SBI LIFE INSURANCE CO LTD",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 1884.4,
@@ -86128,12 +86128,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -86435,7 +86435,7 @@
     {
       "symbol": "BX",
       "name": "Blackstone Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 121.4,
@@ -88436,7 +88436,7 @@
     {
       "symbol": "ADM.L",
       "name": "ADMIRAL GROUP PLC ORD 0.1P",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "FTSE 100",
       "currency": "GBp",
       "priceOrig": 3186.0,
@@ -89654,7 +89654,7 @@
     {
       "symbol": "AFI.AX",
       "name": "AUS.FOUND. FPO [AFI]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 6.46,
@@ -90089,7 +90089,7 @@
     {
       "symbol": "BOQ.AX",
       "name": "BANK QLD FPO [BOQ]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 6.34,
@@ -91087,12 +91087,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -91174,12 +91174,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -91261,12 +91261,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -92351,7 +92351,7 @@
     {
       "symbol": "L",
       "name": "Loews Corporation",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 103.72,
@@ -92438,7 +92438,7 @@
     {
       "symbol": "MRSH",
       "name": "Marsh",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 161.58,
@@ -94439,7 +94439,7 @@
     {
       "symbol": "MPL.AX",
       "name": "MEDIBANK FPO [MPL]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 4.57,
@@ -95698,12 +95698,12 @@
         },
         "kursVs6M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "kursVs12M": {
           "score": 0,
-          "value": NaN,
+          "value": null,
           "unit": "%"
         },
         "momentum": {
@@ -97658,7 +97658,7 @@
     {
       "symbol": "SUN.AX",
       "name": "SUNCORP FPO [SUN]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 16.74,
@@ -98093,7 +98093,7 @@
     {
       "symbol": "JIOFIN.NS",
       "name": "JIO FIN SERVICES LTD",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "NIFTY",
       "currency": "INR",
       "priceOrig": 240.33,
@@ -98267,7 +98267,7 @@
     {
       "symbol": "APO",
       "name": "Apollo Global Management, Inc. ",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 130.46,
@@ -98354,7 +98354,7 @@
     {
       "symbol": "KKR",
       "name": "KKR & Co. Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 99.46,
@@ -98702,7 +98702,7 @@
     {
       "symbol": "GDG.AX",
       "name": "GEN DEV FPO [GDG]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 3.62,
@@ -98876,7 +98876,7 @@
     {
       "symbol": "PNI.AX",
       "name": "PINNACLE FPO [PNI]",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "ASX",
       "currency": "AUD",
       "priceOrig": 16.33,
@@ -98963,7 +98963,7 @@
     {
       "symbol": "COIN",
       "name": "Coinbase Global, Inc.",
-      "sector": "Financial Services",
+      "sector": "Finullcial Services",
       "exchange": "S&P 500",
       "currency": "USD",
       "priceOrig": 216.6,
