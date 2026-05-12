@@ -419,7 +419,7 @@ function toast(msg, dur=2500) {
 // ═══════════════════════════════════════════
 async function loadData() {
   try {
-    const res  = await fetch('./stocks.json?');
+    const res  = await fetch('stocks.json?' + Date.now()); 
     if (!res.ok) throw new Error();
     const data = await res.json();
     allStocks  = data.stocks || [];
@@ -432,10 +432,10 @@ async function loadData() {
     }
 
     // Lokal hinzugefügte Aktien ergänzen (die noch nicht in JSON sind)
-    const jsonSymbols = new Set(allStocks.map(s => s.symbol));
-    for (const cs of customLocal) {
-      if (!jsonSymbols.has(cs.symbol)) allStocks.push(cs);
-    }
+   // const jsonSymbols = new Set(allStocks.map(s => s.symbol));
+    //for (const cs of customLocal) {
+   //   if (!jsonSymbols.has(cs.symbol)) allStocks.push(cs);
+  //  }
 
     buildFilterOptions();
     updateStats();
