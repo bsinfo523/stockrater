@@ -124,34 +124,12 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 .modal-btn{width:100%;margin-top:18px;padding:13px;border-radius:var(--r);border:none;background:var(--teal);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background .2s}
 .modal-btn:hover{background:var(--teal-l)}
 
-/* ── ADD STOCK MODAL (Suche + Autocomplete) ── */
-.add-modal{background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r) var(--r) 0 0;padding:22px;width:100%;max-width:520px;animation:slideUp .25s ease;max-height:90vh;overflow-y:auto}
-.add-hint{font-size:13px;color:var(--text-m);margin-bottom:14px}
-.add-hint strong{color:var(--text)}
-.add-search-wrap{position:relative;margin-bottom:10px}
-.add-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-s);pointer-events:none}
-.add-search-input{width:100%;background:var(--card);border:2px solid var(--teal);border-radius:var(--r);padding:12px 40px 12px 38px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none}
-.add-search-input::placeholder{color:var(--text-s)}
-.add-spinner{display:none;position:absolute;right:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite}
-.add-spinner.active{display:block}
-.add-results{display:flex;flex-direction:column;gap:4px;max-height:260px;overflow-y:auto;margin-bottom:12px}
-.add-result-item{display:flex;align-items:center;gap:12px;padding:10px 13px;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);cursor:pointer;transition:all .15s;text-align:left;width:100%}
-.add-result-item:hover,.add-result-item.focused{border-color:var(--teal);background:var(--card-h)}
-.add-result-sym{font-family:'DM Mono',monospace;font-size:12px;color:var(--teal);background:rgba(42,159,168,.1);padding:2px 7px;border-radius:4px;flex-shrink:0;min-width:65px;text-align:center}
-.add-result-info{flex:1;min-width:0;text-align:left}
-.add-result-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.add-result-meta{font-size:11px;color:var(--text-s);margin-top:1px}
-.add-result-type{font-size:11px;color:var(--text-s);flex-shrink:0}
-.add-no-results{padding:16px;text-align:center;color:var(--text-s);font-size:13px}
-.add-selected{margin-top:4px}
-.add-selected-info{background:rgba(42,159,168,.06);border:1px solid rgba(42,159,168,.2);border-radius:var(--rs);padding:12px 14px;margin-bottom:12px;display:flex;gap:12px;align-items:center}
-.add-sel-sym{font-family:'DM Mono',monospace;font-size:16px;color:var(--teal);font-weight:600;flex-shrink:0}
-.add-sel-name{font-size:14px;font-weight:500}
-.add-sel-meta{font-size:12px;color:var(--text-m);margin-top:2px}
-.add-progress{margin-bottom:12px}
-.add-progress-bar-wrap{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:6px}
-.add-progress-bar{height:100%;background:linear-gradient(90deg,var(--teal-d),var(--teal));border-radius:2px;width:0%;transition:width .5s ease}
-.add-progress-text{font-size:12px;color:var(--text-m);text-align:center}
+/* ── ADD STOCK MODAL ── */
+.add-modal{background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r) var(--r) 0 0;padding:22px;width:100%;max-width:520px;animation:slideUp .25s ease}
+.add-input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px;color:var(--text);font-family:'DM Mono',monospace;font-size:15px;outline:none;margin-bottom:10px;transition:border-color .2s}
+.add-input:focus{border-color:var(--teal)}
+.add-hint{font-size:12px;color:var(--text-s);margin-bottom:14px;line-height:1.6}
+.add-hint code{color:var(--teal);font-family:'DM Mono',monospace}
 
 /* ── DETAIL PANEL ── */
 .detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300}
@@ -228,10 +206,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--border-l);border-radius:var(--r);padding:10px 20px;font-size:13px;color:var(--text);z-index:999;transition:transform .3s ease;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
-/* ── SETTINGS BUTTON ── */
-.btn-settings{border-color:var(--border-l)}
-.btn-settings.connected{border-color:var(--buy);color:var(--buy)}
-
 /* ── RESPONSIVE ── */
 @media(max-width:600px){
   .stock-card{grid-template-columns:44px 1fr auto auto}
@@ -276,10 +250,6 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
     Aktie hinzufügen
   </button>
-  <button class="btn btn-settings" id="settings-btn" title="GitHub Einstellungen">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M12 2v2m0 16v2m10-10h-2M4 12H2m15.66-5.66-1.41 1.41M7.76 16.24l-1.41 1.42M19.07 19.07l-1.41-1.41M7.76 7.76 6.34 6.34"/></svg>
-    GitHub
-  </button>
 </div>
 
 <div class="filter-row">
@@ -316,81 +286,19 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 <!-- ADD STOCK MODAL -->
 <div class="modal-overlay" id="add-modal">
   <div class="add-modal">
-    <div class="modal-header">
-      <span class="modal-title">Aktie hinzufügen</span>
-      <button class="modal-close" id="add-close">✕</button>
-    </div>
-    <p class="add-hint">Name oder Symbol eingeben – z.B. <strong>Nel</strong>, <strong>Apple</strong> oder <strong>SAP</strong></p>
-
-    <div class="add-search-wrap">
-      <svg class="add-search-icon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input class="add-search-input" id="add-query" type="text" placeholder="Aktie suchen…" autocomplete="off" spellcheck="false">
-      <div class="add-spinner" id="add-spinner"></div>
-    </div>
-
-    <!-- Suchergebnisse -->
-    <div class="add-results" id="add-results"></div>
-
-    <!-- Ausgewählte Aktie -->
-    <div class="add-selected" id="add-selected" style="display:none">
-      <div class="add-selected-info" id="add-selected-info"></div>
-      <div class="add-progress" id="add-progress" style="display:none">
-        <div class="add-progress-bar" id="add-progress-bar"></div>
-        <div class="add-progress-text" id="add-progress-text">Lade Kursdaten…</div>
-      </div>
-      <button class="modal-btn" id="add-confirm">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-        Zur Liste hinzufügen & Kursdaten laden
-      </button>
-    </div>
-
-    <div id="add-status" style="margin-top:10px;font-size:13px;color:var(--text-m);line-height:1.5"></div>
-  </div>
-</div>
-
-<!-- SETTINGS MODAL -->
-<div class="modal-overlay" id="settings-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">GitHub Einstellungen</span>
-      <button class="modal-close" id="settings-close">✕</button>
-    </div>
-    <p style="font-size:13px;color:var(--text-m);margin-bottom:16px;line-height:1.6">
-      Mit einem GitHub Token können manuell hinzugefügte Aktien automatisch in
-      <code style="color:var(--teal)">docs/custom_stocks.txt</code> gespeichert werden –
-      ohne GitHub-Website öffnen zu müssen.
+    <div class="modal-header"><span class="modal-title">Aktie hinzufügen</span><button class="modal-close" id="add-close">✕</button></div>
+    <p class="add-hint">
+      Gib das Yahoo Finance Symbol ein, z.B. <code>AAPL</code>, <code>SAP.DE</code>, <code>0700.HK</code>.<br>
+      Die Aktie wird sofort angezeigt und beim nächsten automatischen Update in die Datei <code>docs/custom_stocks.txt</code> übernommen.
     </p>
-
-    <div style="margin-bottom:12px">
-      <label style="font-size:12px;color:var(--text-s);display:block;margin-bottom:6px">GitHub Personal Access Token</label>
-      <input id="gh-token-input" type="password"
-        placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-        style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;color:var(--text);font-family:DM Mono,monospace;font-size:13px;outline:none">
-    </div>
-    <div style="margin-bottom:12px">
-      <label style="font-size:12px;color:var(--text-s);display:block;margin-bottom:6px">GitHub Benutzername</label>
-      <input id="gh-owner-input" type="text"
-        placeholder="dein-username"
-        style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;color:var(--text);font-family:DM Mono,monospace;font-size:13px;outline:none">
-    </div>
-    <div style="margin-bottom:16px">
-      <label style="font-size:12px;color:var(--text-s);display:block;margin-bottom:6px">Repository Name</label>
-      <input id="gh-repo-input" type="text"
-        placeholder="stockrater"
-        style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:10px 12px;color:var(--text);font-family:DM Mono,monospace;font-size:13px;outline:none">
-    </div>
-
-    <div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:var(--rs);padding:12px;margin-bottom:16px;font-size:12px;color:var(--text-s);line-height:1.6">
-      <strong style="color:var(--watch)">Token erstellen:</strong><br>
-      GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token<br>
-      Nur <code style="color:var(--teal)">repo</code> Berechtigung ankreuzen. Der Token wird nur lokal in deinem Browser gespeichert.
-    </div>
-
-    <div id="settings-status" style="font-size:13px;margin-bottom:10px"></div>
+    <input class="add-input" id="add-symbol" type="text" placeholder="Symbol  (z.B. AAPL oder SAP.DE)" autocomplete="off" autocapitalize="characters">
+    <input class="add-input" id="add-name"   type="text" placeholder="Name (optional)" autocomplete="off">
+    <input class="add-input" id="add-sector" type="text" placeholder="Sektor (optional)" autocomplete="off">
+    <input class="add-input" id="add-exch"   type="text" placeholder="Börse (optional, z.B. NASDAQ)" autocomplete="off">
     <div style="display:flex;gap:8px">
-      <button class="modal-btn" id="settings-test" style="flex:1;background:var(--surface);color:var(--teal);border:1px solid var(--teal);margin-top:0">Verbindung testen</button>
-      <button class="modal-btn" id="settings-save" style="flex:1;margin-top:0">Speichern</button>
+      <button class="modal-btn" id="add-confirm" style="flex:1">Hinzufügen & Suchen</button>
     </div>
+    <div id="add-status" style="margin-top:10px;font-size:13px;color:var(--text-m)"></div>
   </div>
 </div>
 
@@ -544,7 +452,6 @@ async function loadData() {
       `<div class="empty"><div class="empty-icon">⚠️</div><h3>Datenfehler</h3><p>${e.message}</p></div>`;
   }
 }
-
 // ═══════════════════════════════════════════
 //  FILTER-DROPDOWNS BEFÜLLEN
 // ═══════════════════════════════════════════
@@ -902,479 +809,67 @@ document.getElementById('search').addEventListener('input', e => {
 });
 
 // ═══════════════════════════════════════════
-//  AKTIE HINZUFÜGEN – Suche + Autocomplete + Sofortbewertung
+//  AKTIE HINZUFÜGEN (lokal + custom_stocks.txt Hinweis)
 // ═══════════════════════════════════════════
+document.getElementById('add-btn').addEventListener('click',   () => document.getElementById('add-modal').classList.add('open'));
+document.getElementById('add-close').addEventListener('click', () => document.getElementById('add-modal').classList.remove('open'));
+document.getElementById('add-modal').addEventListener('click', e => { if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
 
-let addSelectedStock = null;  // aktuell ausgewählter Vorschlag
-
-// Modal öffnen/schließen
-document.getElementById('add-btn').addEventListener('click', () => {
-  document.getElementById('add-modal').classList.add('open');
-  setTimeout(() => document.getElementById('add-query').focus(), 100);
-});
-document.getElementById('add-close').addEventListener('click', closeAddModal);
-document.getElementById('add-modal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeAddModal();
-});
-
-function closeAddModal() {
-  document.getElementById('add-modal').classList.remove('open');
-  document.getElementById('add-query').value = '';
-  document.getElementById('add-results').innerHTML = '';
-  document.getElementById('add-selected').style.display = 'none';
-  document.getElementById('add-status').innerHTML = '';
-  addSelectedStock = null;
-}
-
-// ── Yahoo Finance Suche ──
-let searchDebounce;
-document.getElementById('add-query').addEventListener('input', e => {
-  const q = e.target.value.trim();
-  document.getElementById('add-selected').style.display = 'none';
-  document.getElementById('add-status').innerHTML = '';
-  addSelectedStock = null;
-  clearTimeout(searchDebounce);
-  if (q.length < 2) { document.getElementById('add-results').innerHTML = ''; return; }
-  searchDebounce = setTimeout(() => searchYahoo(q), 350);
-});
-
-async function searchYahoo(query) {
-  const spinner = document.getElementById('add-spinner');
-  const results = document.getElementById('add-results');
-  spinner.classList.add('active');
-  results.innerHTML = '';
-  try {
-    // Yahoo Finance Search API – öffentlich, kein Key nötig
-    const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(query)}&lang=de&region=DE&quotesCount=8&newsCount=0&listsCount=0&enableFuzzyQuery=true&enableNavLinks=false`;
-    const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if (!r.ok) throw new Error('Yahoo nicht erreichbar');
-    const data = await r.json();
-    const quotes = (data.quotes || []).filter(q =>
-      q.quoteType === 'EQUITY' || q.quoteType === 'ETF'
-    ).slice(0, 8);
-
-    if (!quotes.length) {
-      results.innerHTML = `<div class="add-no-results">Keine Aktien für „${query}" gefunden.<br>Versuche das genaue Symbol, z.B. NEL.OL</div>`;
-      return;
-    }
-
-    results.innerHTML = quotes.map((q, i) => {
-      const exch = q.exchDisp || q.exchange || '';
-      const type = q.quoteType === 'ETF' ? 'ETF' : 'Aktie';
-      return `<button class="add-result-item" data-idx="${i}" onclick="selectStock(${i})">
-        <span class="add-result-sym">${q.symbol}</span>
-        <span class="add-result-info">
-          <div class="add-result-name">${q.longname || q.shortname || q.symbol}</div>
-          <div class="add-result-meta">${exch}${q.sector ? ' · ' + q.sector : ''}</div>
-        </span>
-        <span class="add-result-type">${type}</span>
-      </button>`;
-    }).join('');
-
-    // Daten für spätere Auswahl speichern
-    window._addSearchResults = quotes;
-  } catch(e) {
-    results.innerHTML = `<div class="add-no-results">⚠ Suche nicht verfügbar (CORS-Einschränkung im Browser).<br>Gib das Symbol direkt ein: <strong style="color:var(--teal)">${query.toUpperCase()}</strong>
-      <br><button onclick="selectManual('${query.toUpperCase()}')" style="margin-top:8px;padding:6px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px">Symbol direkt verwenden</button></div>`;
-  } finally {
-    spinner.classList.remove('active');
-  }
-}
-
-function selectManual(sym) {
-  addSelectedStock = { symbol: sym, name: sym, exchange: 'Manuell', sector: '', currency: 'USD' };
-  showSelected();
-}
-
-window.selectStock = function(idx) {
-  const q = window._addSearchResults?.[idx];
-  if (!q) return;
-  addSelectedStock = {
-    symbol:   q.symbol,
-    name:     q.longname || q.shortname || q.symbol,
-    exchange: q.exchDisp || q.exchange || 'Unbekannt',
-    sector:   q.sector || '',
-    currency: q.currency || 'USD',
-    quoteType: q.quoteType
-  };
-  showSelected();
-};
-
-function showSelected() {
-  const s = addSelectedStock;
-  document.getElementById('add-results').innerHTML = '';
-  document.getElementById('add-selected-info').innerHTML = `
-    <div>
-      <div class="add-sel-sym">${s.symbol}</div>
-    </div>
-    <div>
-      <div class="add-sel-name">${s.name}</div>
-      <div class="add-sel-meta">${s.exchange}${s.sector ? ' · ' + s.sector : ''} · ${s.currency}</div>
-    </div>`;
-  document.getElementById('add-selected').style.display = 'block';
-  document.getElementById('add-progress').style.display = 'none';
-  document.getElementById('add-status').innerHTML = '';
-}
-
-// ── Hinzufügen + Sofortbewertung via Claude API ──
 document.getElementById('add-confirm').addEventListener('click', async () => {
-  if (!addSelectedStock) return;
-  const s = addSelectedStock;
+  const sym  = document.getElementById('add-symbol').value.trim().toUpperCase();
+  const name = document.getElementById('add-name').value.trim();
+  const sec  = document.getElementById('add-sector').value.trim();
+  const exch = document.getElementById('add-exch').value.trim() || 'Manuell';
   const status = document.getElementById('add-status');
-  const progressWrap = document.getElementById('add-progress');
-  const progressBar  = document.getElementById('add-progress-bar');
-  const progressText = document.getElementById('add-progress-text');
-  const btn          = document.getElementById('add-confirm');
 
-  // Prüfen ob schon vorhanden
-  if (allStocks.find(x => x.symbol === s.symbol)) {
-    status.innerHTML = `<span style="color:var(--teal)">✓ ${s.symbol} ist bereits in der Liste.</span>`;
-    return;
-  }
+  if (!sym) { status.textContent = '⚠ Bitte ein Symbol eingeben.'; return; }
+  if (allStocks.find(s=>s.symbol===sym)) { status.textContent = '✓ Diese Aktie ist bereits in der Liste.'; return; }
 
-  btn.disabled = true;
-  btn.textContent = '⏳ Lade Daten…';
-  progressWrap.style.display = 'block';
+  status.textContent = `⏳ Suche ${sym}…`;
 
-  function setProgress(pct, text) {
-    progressBar.style.width = pct + '%';
-    progressText.textContent = text;
-  }
-
-  try {
-    setProgress(10, 'Frage Kursdaten ab…');
-
-    // Claude API für Sofortbewertung
-    const prompt = `Du bist ein Finanzanalyst. Bewerte die Aktie mit dem Yahoo Finance Symbol "${s.symbol}" (${s.name}, ${s.exchange}).
-
-Rufe aktuelle Finanzdaten ab und berechne das StockRater-Rating (12 Kennzahlen, jeweils +1/0/-1 Punkt):
-1. Eigenkapitalrentabilität (ROE): >15%=+1, 10-15%=0, <10%=-1
-2. Eigenkapitalquote: >25%=+1, 15-25%=0, <15%=-1 (Tech: >45/30; Banken: >10/5)
-3. EBIT-Marge: >12%=+1, 6-12%=0, <6%=-1
-4. KGV aktuell: <12=+1, 12-16=0, >16=-1 (Tech: <22/33)
-5. KGV Forward: gleiche Schwellen
-6. Kursveränderung 6M vs. Index: >+5%=+1, ±5%=0, <-5%=-1
-7. Kursveränderung 12M vs. Index: gleich
-8. Momentum: 6M besser als 12M=+1, schlechter=-1
-9. Erwartetes Gewinnwachstum: >5%=+1, ±5%=0, <-5%=-1
-10. Gewinnrevision: gleich (Näherung)
-11. Quartalszahlen-Reaktion: Näherung
-12. KBV: <1.5=+1, 1.5-2.5=0, >2.5=-1
-
-Antworte NUR mit einem JSON-Objekt, ohne Markdown-Backticks:
-{
-  "symbol": "${s.symbol}",
-  "name": "vollständiger Firmenname",
-  "sector": "Sektor auf Englisch",
-  "exchange": "Börse/Index",
-  "currency": "Währungscode",
-  "priceOrig": aktuellerKursInOriginalwährung,
-  "price": aktuellerKursInEUR,
-  "high52wOrig": 52WochenHochOriginal,
-  "high52w": 52WochenHochEUR,
-  "marketCapOrig": MarktkapitalisierungOriginal,
-  "marketCap": MarktkapitalisierungEUR,
-  "fxRate": WechselkursFaktor1EURinFremdwährung,
-  "abstand": ProzentAbstandVom52WochenHoch,
-  "rating": Gesamtpunktzahl,
-  "recommendation": "buy|watch|sell",
-  "details": {
-    "eigenkapitalrentabilitaet": {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "eigenkapitalquote":         {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "ebitMarge":                 {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "kgvAktuell":                {"score": -1|0|1, "value": Zahlenwert, "unit": ""},
-    "kgv5Jahre":                 {"score": -1|0|1, "value": Zahlenwert, "unit": ""},
-    "kursVs6M":                  {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "kursVs12M":                 {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "momentum":                  {"score": -1|0|1, "value": null,       "unit": ""},
-    "gewinnwachstum":            {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "gewinnrevision":            {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "quartalszahlen":            {"score": -1|0|1, "value": Zahlenwert, "unit": "%"},
-    "kbv":                       {"score": -1|0|1, "value": Zahlenwert, "unit": ""}
-  }
-}`;
-
-    setProgress(30, 'Bewertung wird berechnet…');
-
-    const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    setProgress(60, 'Verarbeite Antwort…');
-
-    const apiData = await apiRes.json();
-    const textBlock = apiData.content?.find(b => b.type === 'text');
-    if (!textBlock) throw new Error('Keine Antwort von Claude');
-
-    // JSON aus Antwort extrahieren
-    let raw = textBlock.text.trim();
-    raw = raw.replace(/```json
-?/g,'').replace(/```
-?/g,'').trim();
-    const stockData = JSON.parse(raw);
-
-    setProgress(85, 'Speichere Daten…');
-
-    // Pflichtfelder sicherstellen
-    const today = new Date().toISOString().slice(0,10);
-    const finalStock = {
-      symbol:        stockData.symbol || s.symbol,
-      name:          stockData.name   || s.name,
-      sector:        stockData.sector || s.sector || '',
-      exchange:      stockData.exchange || s.exchange,
-      currency:      stockData.currency || s.currency || 'USD',
-      priceOrig:     stockData.priceOrig || null,
-      price:         stockData.price || null,
-      high52wOrig:   stockData.high52wOrig || null,
-      high52w:       stockData.high52w || null,
-      marketCapOrig: stockData.marketCapOrig || null,
-      marketCap:     stockData.marketCap || null,
-      fxRate:        stockData.fxRate || 1,
-      abstand:       stockData.abstand || null,
-      rating:        stockData.rating || 0,
-      recommendation: stockData.recommendation || 'watch',
-      details:       stockData.details || {},
-      priceHistory:  [{ date: today, price: stockData.price || null, currency: 'EUR' }],
-      updatedAt:     new Date().toISOString(),
-      _custom:       true
-    };
-
-    // In allStocks einfügen
-    allStocks.unshift(finalStock);
-
-    // In customLocal speichern
-    customLocal = customLocal.filter(c => c.symbol !== finalStock.symbol);
-    customLocal.push(finalStock);
-    localStorage.setItem('sr-custom', JSON.stringify(customLocal));
-
-    // custom_stocks.txt Eintrag für GitHub
-    const txtLine = `${finalStock.symbol};${finalStock.name};${finalStock.sector};${finalStock.exchange}`;
-
-    setProgress(90, 'Speichere in GitHub…');
-
-    // Automatisch in custom_stocks.txt schreiben wenn GitHub verbunden
-    const ghCfg = getGhConfig();
-    let saveNote = '';
-    if (ghCfg.token && ghCfg.owner) {
-      const wrote = await writeToGitHub(txtLine);
-      if (wrote) {
-        saveNote = `<span style="color:var(--buy)">✓ Automatisch in <code>custom_stocks.txt</code> gespeichert!</span><br>
-          <span style="color:var(--text-s)">Beim nächsten GitHub Actions Run werden Kursdaten aktualisiert.</span>`;
-      } else {
-        saveNote = `<span style="color:var(--watch)">⚠ GitHub-Speicherung fehlgeschlagen.</span><br>
-          Manuell einfügen: <code style="color:var(--teal)">${txtLine}</code>
-          <button onclick="navigator.clipboard.writeText('${txtLine}');this.textContent='✓ Kopiert!'"
-            style="margin-left:6px;padding:2px 9px;background:var(--teal);color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:11px">Kopieren</button>`;
-      }
-    } else {
-      saveNote = `GitHub nicht verbunden. Klicke auf ⚙ und gib deinen Token ein, damit dies automatisch gespeichert wird.<br>
-        Oder manuell einfügen: <code style="color:var(--teal)">${txtLine}</code>
-        <button onclick="navigator.clipboard.writeText('${txtLine}');this.textContent='✓ Kopiert!'"
-          style="margin-left:6px;padding:2px 9px;background:var(--teal);color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:11px">Kopieren</button>`;
-    }
-
-    setProgress(100, 'Fertig!');
-    buildFilterOptions();
-    updateStats();
-    applyFilters();
-
-    const ratingStr = finalStock.rating > 0 ? '+' + finalStock.rating : String(finalStock.rating);
-    status.innerHTML = `
-      <div style="background:rgba(76,175,130,.08);border:1px solid rgba(76,175,130,.2);border-radius:8px;padding:12px;margin-top:4px">
-        <div style="color:var(--buy);font-weight:600;margin-bottom:6px">✓ ${finalStock.name} hinzugefügt! Rating: ${ratingStr}</div>
-        <div style="font-size:12px;color:var(--text-s);line-height:1.6">${saveNote}</div>
-      </div>`;
-
-    toast(`${finalStock.name} hinzugefügt ✓`);
-    btn.textContent = '✓ Hinzugefügt';
-    setTimeout(closeAddModal, 3500);
-
-  } catch(err) {
-    console.error('Add stock error:', err);
-    // Fallback: Stub ohne Bewertung
-    const stub = {
-      symbol: s.symbol, name: s.name, sector: s.sector, exchange: s.exchange,
-      currency: s.currency, price: null, marketCap: null, high52w: null,
-      priceOrig: null, marketCapOrig: null, high52wOrig: null, fxRate: 1,
-      abstand: null, rating: 0, recommendation: 'watch',
-      details: {}, priceHistory: [], updatedAt: new Date().toISOString(), _custom: true
-    };
-    allStocks.unshift(stub);
-    customLocal = customLocal.filter(c => c.symbol !== stub.symbol);
-    customLocal.push(stub);
-    localStorage.setItem('sr-custom', JSON.stringify(customLocal));
-    buildFilterOptions(); updateStats(); applyFilters();
-
-    status.innerHTML = `<div style="color:var(--watch)">⚠ Bewertung nicht verfügbar (${err.message}).<br>
-      Aktie wurde ohne Kursdaten hinzugefügt.<br>
-      <span style="font-size:11px;color:var(--text-s)">Füge in custom_stocks.txt ein: <code style="color:var(--teal)">${s.symbol};${s.name};${s.sector};${s.exchange}</code></span></div>`;
-    btn.textContent = 'Ohne Daten hinzugefügt';
-    btn.disabled = false;
-  }
-});
-
-// ═══════════════════════════════════════════
-//  GITHUB SETTINGS & FILE WRITE
-// ═══════════════════════════════════════════
-
-function getGhConfig() {
-  return {
-    token: localStorage.getItem('sr-gh-token') || '',
-    owner: localStorage.getItem('sr-gh-owner') || '',
-    repo:  localStorage.getItem('sr-gh-repo')  || 'stockrater',
+  // Lokalen Eintrag anlegen (Stub mit bekannten Daten)
+  const stub = {
+    symbol: sym, name: name||sym, sector: sec, exchange: exch,
+    currency: 'EUR', price: null, marketCap: null, high52w: null,
+    abstand: null, rating: 0, recommendation: 'watch',
+    details: {}, priceHistory: [],
+    updatedAt: new Date().toISOString(),
+    _custom: true
   };
-}
 
-function saveGhConfig(token, owner, repo) {
-  localStorage.setItem('sr-gh-token', token);
-  localStorage.setItem('sr-gh-owner', owner);
-  localStorage.setItem('sr-gh-repo',  repo);
-}
+  allStocks.unshift(stub);
+  customLocal = customLocal.filter(c=>c.symbol!==sym);
+  customLocal.push(stub);
+  localStorage.setItem('sr-custom', JSON.stringify(customLocal));
 
-function updateSettingsBtn() {
-  const { token, owner } = getGhConfig();
-  const btn = document.getElementById('settings-btn');
-  if (token && owner) {
-    btn.classList.add('connected');
-    btn.title = `GitHub: ${owner} – verbunden`;
-  } else {
-    btn.classList.remove('connected');
-    btn.title = 'GitHub Einstellungen';
-  }
-}
+  buildFilterOptions();
+  updateStats();
+  applyFilters();
 
-async function writeToGitHub(newLine) {
-  const { token, owner, repo } = getGhConfig();
-  if (!token || !owner) return false;
+  status.innerHTML = `✓ <strong>${sym}</strong> zur Liste hinzugefügt!<br>
+    <span style="color:var(--text-s);font-size:11px">
+    Damit die Aktie dauerhaft und mit Kursdaten geladen wird, füge sie in<br>
+    <code style="color:var(--teal)">docs/custom_stocks.txt</code> im GitHub-Repo ein:<br>
+    <code style="color:var(--teal)">${sym}${name?';'+name:''}${sec?';'+sec:''}${exch&&exch!=='Manuell'?';'+exch:''}</code>
+    </span>`;
 
-  const filePath = 'docs/custom_stocks.txt';
-  const apiBase  = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-
-  try {
-    // Aktuelle Datei holen (brauchen SHA für Update)
-    const getRes = await fetch(apiBase, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/vnd.github+json'
-      }
-    });
-
-    let currentContent = '';
-    let sha = undefined;
-
-    if (getRes.ok) {
-      const fileData = await getRes.json();
-      sha = fileData.sha;
-      currentContent = atob(fileData.content.replace(/\n/g,''));
-    } else if (getRes.status !== 404) {
-      console.error('GitHub get error:', getRes.status);
-      return false;
-    }
-
-    // Prüfen ob Zeile schon vorhanden
-    const sym = newLine.split(';')[0];
-    if (currentContent.split('\n').some(l => l.startsWith(sym + ';') || l.trim() === sym)) {
-      return true; // Schon drin
-    }
-
-    // Neue Zeile anhängen
-    const updatedContent = currentContent.trimEnd() + '\n' + newLine + '\n';
-    const encoded = btoa(unescape(encodeURIComponent(updatedContent)));
-
-    const body = {
-      message: `Aktie hinzugefügt: ${sym}`,
-      content: encoded,
-      ...(sha ? { sha } : {})
-    };
-
-    const putRes = await fetch(apiBase, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/vnd.github+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-
-    return putRes.ok;
-  } catch(e) {
-    console.error('GitHub write error:', e);
-    return false;
-  }
-}
-
-// Settings Modal
-document.getElementById('settings-btn').addEventListener('click', () => {
-  const { token, owner, repo } = getGhConfig();
-  document.getElementById('gh-token-input').value = token;
-  document.getElementById('gh-owner-input').value = owner;
-  document.getElementById('gh-repo-input').value  = repo;
-  document.getElementById('settings-status').innerHTML = '';
-  document.getElementById('settings-modal').classList.add('open');
-});
-document.getElementById('settings-close').addEventListener('click', () =>
-  document.getElementById('settings-modal').classList.remove('open'));
-document.getElementById('settings-modal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
-});
-
-document.getElementById('settings-save').addEventListener('click', () => {
-  const token = document.getElementById('gh-token-input').value.trim();
-  const owner = document.getElementById('gh-owner-input').value.trim();
-  const repo  = document.getElementById('gh-repo-input').value.trim() || 'stockrater';
-  saveGhConfig(token, owner, repo);
-  updateSettingsBtn();
-  document.getElementById('settings-status').innerHTML =
-    '<span style="color:var(--buy)">✓ Gespeichert!</span>';
-  setTimeout(() => document.getElementById('settings-modal').classList.remove('open'), 1000);
-});
-
-document.getElementById('settings-test').addEventListener('click', async () => {
-  const token = document.getElementById('gh-token-input').value.trim();
-  const owner = document.getElementById('gh-owner-input').value.trim();
-  const repo  = document.getElementById('gh-repo-input').value.trim() || 'stockrater';
-  const status = document.getElementById('settings-status');
-  status.innerHTML = '⏳ Teste Verbindung…';
-  try {
-    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-      headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' }
-    });
-    if (r.ok) {
-      const d = await r.json();
-      status.innerHTML = `<span style="color:var(--buy)">✓ Verbunden! Repo: ${d.full_name}</span>`;
-      saveGhConfig(token, owner, repo);
-      updateSettingsBtn();
-    } else if (r.status === 401) {
-      status.innerHTML = '<span style="color:var(--sell)">✗ Token ungültig oder abgelaufen.</span>';
-    } else if (r.status === 404) {
-      status.innerHTML = '<span style="color:var(--sell)">✗ Repository nicht gefunden. Benutzername/Repo-Name prüfen.</span>';
-    } else {
-      status.innerHTML = `<span style="color:var(--sell)">✗ Fehler ${r.status}</span>`;
-    }
-  } catch(e) {
-    status.innerHTML = `<span style="color:var(--sell)">✗ Netzwerkfehler: ${e.message}</span>`;
-  }
+  toast(`${sym} hinzugefügt`);
+  document.getElementById('add-symbol').value = '';
+  document.getElementById('add-name').value   = '';
+  document.getElementById('add-sector').value = '';
+  document.getElementById('add-exch').value   = '';
 });
 
 // ═══════════════════════════════════════════
 //  KEYBOARD
 // ═══════════════════════════════════════════
 document.addEventListener('keydown', e => {
-  if (e.key==='Escape') { closeDetail(); ['sort-modal','add-modal','settings-modal'].forEach(id=>document.getElementById(id).classList.remove('open')); }
+  if (e.key==='Escape') { closeDetail(); document.getElementById('sort-modal').classList.remove('open'); document.getElementById('add-modal').classList.remove('open'); }
 });
 
 // ═══════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════
-updateSettingsBtn();
 updateStats();
 loadData();
 </script>
