@@ -419,10 +419,16 @@ function toast(msg, dur=2500) {
 // ═══════════════════════════════════════════
 async function loadData() {
   try {
-    const res  = await fetch('stocks.json?' + Date.now()); 
-    if (!res.ok) throw new Error();
+    const res  = await fetch('stocks.json?' + Date.now());
+    if (!res.ok) throw new Error("Fetch failed");
     const data = await res.json();
-    allStocks  = data.stocks || [];
+    
+    // Konvertiere das Objekt in ein Array, falls es kein Array ist
+    if (data.stocks && !Array.isArray(data.stocks)) {
+      allStocks = Object.values(data.stocks);
+    } else {
+      allStocks = data.stocks || [];
+    }
 
     if (data.metadata?.updatedAt) {
       const d = new Date(data.metadata.updatedAt);
@@ -431,21 +437,21 @@ async function loadData() {
         d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
     }
 
-    // Lokal hinzugefügte Aktien ergänzen (die noch nicht in JSON sind)
-   // const jsonSymbols = new Set(allStocks.map(s => s.symbol));
-    //for (const cs of customLocal) {
-   //   if (!jsonSymbols.has(cs.symbol)) allStocks.push(cs);
-  //  }
+    // Lokal hinzugefügte Aktien ergänzen
+    const jsonSymbols = new Set(allStocks.map(s => s.symbol));
+    for (const cs of customLocal) {
+      if (!jsonSymbols.has(cs.symbol)) allStocks.push(cs);
+    }
 
     buildFilterOptions();
     updateStats();
     applyFilters();
-  } catch {
+  } catch (e) {
+    console.error("Fehler beim Laden:", e);
     document.getElementById('stock-list').innerHTML =
-      `<div class="empty"><div class="empty-icon">⚠️</div><h3>stocks.json nicht gefunden</h3><p>Führe den GitHub Actions Workflow aus.</p></div>`;
+      `<div class="empty"><div class="empty-icon">⚠️</div><h3>Datenfehler</h3><p>${e.message}</p></div>`;
   }
 }
-
 // ═══════════════════════════════════════════
 //  FILTER-DROPDOWNS BEFÜLLEN
 // ═══════════════════════════════════════════
