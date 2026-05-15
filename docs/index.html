@@ -520,8 +520,8 @@ function applyFilters() {
       case 'name':       return a.name.localeCompare(b.name,'de');
       case 'marketcap':  return (b.marketCap??0)-(a.marketCap??0);
       case 'analyst_target': {
-        const ua = a.analyst?.upside_mean ?? -999;
-        const ub = b.analyst?.upside_mean ?? -999;
+        const ua = a.analyst?.upside ?? -999;
+        const ub = b.analyst?.upside ?? -999;
         return ub - ua;
       }
       default: return 0;
