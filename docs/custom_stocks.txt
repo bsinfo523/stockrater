@@ -12,3 +12,9 @@
 # ────────────────────────────────────────────────────
 
 NEL.OL;Nel ASA;Energy;OSE
+REDW;Redwood AI;Technology;NASDAQ
+IONQ;IonQ;Technology;NYSE
+VGLO;Venture Global LNG;Energy;NYSE
+SIX2.DE;Sixt Vz.;Industrials;Xetra
+BYDDF;BYD Co. Ltd.;Consumer Cyclical;HK
+TEVA;Teva Pharmaceutical Inds Ltd.;Healthcare;NYSE
