@@ -8,26 +8,26 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d0f14;--surface:#141820;--card:#1a2030;--card-h:#1f2840;
-  --border:#252d3d;--border-l:#2e3a50;
-  --teal:#2a9fa8;--teal-l:#34c4ce;--teal-d:#1a7880;
-  --gold:#c9a84c;
-  --buy:#4caf82;--buy-bg:#0e2b1f;
-  --watch:#c9a84c;--watch-bg:#2a2010;
-  --sell:#e05252;--sell-bg:#2b0e0e;
-  --text:#e8ecf4;--text-m:#8b95a8;--text-s:#5a6478;
+  --bg:#f4f6f9;--surface:#ffffff;--card:#ffffff;--card-h:#f0f4ff;
+  --border:#e2e6ed;--border-l:#c8d0de;
+  --teal:#1a8a96;--teal-l:#1fa8b8;--teal-d:#14707a;
+  --gold:#b8860b;
+  --buy:#1e8a56;--buy-bg:#e8f5ee;
+  --watch:#9a6800;--watch-bg:#fef6e0;
+  --sell:#c0392b;--sell-bg:#fdecea;
+  --text:#1a2133;--text-m:#4a5568;--text-s:#8a9bb0;
   --r:12px;--rs:8px;
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
 
 /* ── HEADER ── */
-header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+header{position:sticky;top:0;z-index:100;background:rgba(244,246,249,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .header-inner{max-width:1200px;margin:0 auto;padding:0 16px;height:58px;display:flex;align-items:center;gap:12px}
 .logo{font-family:'DM Serif Display',serif;font-size:21px;letter-spacing:-.5px;flex-shrink:0}
 .logo span{color:var(--teal)}
 .header-stats{display:flex;gap:8px;margin-left:auto;flex-shrink:0}
-.stat-pill{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--text-m);white-space:nowrap}
+.stat-pill{display:flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.05);border-radius:20px;padding:3px 10px;font-size:12px;color:var(--text-m);white-space:nowrap}
 .stat-dot{width:6px;height:6px;border-radius:50%}
 .stat-dot.buy{background:var(--buy)}.stat-dot.watch{background:var(--watch)}.stat-dot.sell{background:var(--sell)}
 .updated-badge{font-size:11px;color:var(--text-s);font-family:'DM Mono',monospace;white-space:nowrap}
@@ -57,7 +57,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 /* Dropdown-Filter */
 .filter-select{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:5px 10px;color:var(--text-m);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;outline:none;transition:border-color .2s;max-width:160px}
 .filter-select:focus{border-color:var(--teal)}
-.filter-select option{background:var(--surface)}
+.filter-select option{background:var(--surface);color:var(--text)}
 
 /* ── RESULTS INFO ── */
 .results-info{max-width:1200px;margin:0 auto;padding:0 16px 8px;font-size:13px;color:var(--text-s)}
@@ -65,7 +65,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 
 /* ── STOCK CARD ── */
 .stock-list{max-width:1200px;margin:0 auto;padding:0 16px 40px;display:flex;flex-direction:column;gap:7px}
-.stock-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:grid;grid-template-columns:48px 1fr auto auto auto;align-items:center;gap:12px;cursor:pointer;transition:all .2s;position:relative}
+.stock-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:0 1px 4px rgba(0,0,0,.06);padding:14px 16px;display:grid;grid-template-columns:48px 1fr auto auto auto;align-items:center;gap:12px;cursor:pointer;transition:all .2s;position:relative}
 .stock-card:hover{border-color:var(--border-l);background:var(--card-h);transform:translateX(2px)}
 .stock-card.buy{border-left:3px solid var(--buy)}
 .stock-card.watch{border-left:3px solid var(--watch)}
@@ -110,6 +110,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 .abstand-badge.neg{background:rgba(224,82,82,.12);color:var(--sell)}
 
 /* Watchlist-Stern */
+.div-badge{font-size:11px;padding:2px 7px;border-radius:6px;background:rgba(26,138,150,.1);color:var(--teal);font-weight:500;white-space:nowrap}
 .wl-btn{background:none;border:none;cursor:pointer;color:var(--text-s);padding:5px;border-radius:6px;transition:all .2s;flex-shrink:0;font-size:18px;line-height:1}
 .wl-btn:hover{color:var(--gold)}
 .wl-btn.starred{color:var(--gold)}
@@ -121,7 +122,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 .trend-badge.flat{background:rgba(139,149,168,.1);color:var(--text-m)}
 
 /* ── SORT MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:flex-end;justify-content:center}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(50,60,80,.5);z-index:200;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border-l);border-radius:var(--r) var(--r) 0 0;padding:22px;width:100%;max-width:520px;animation:slideUp .25s ease}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
@@ -139,7 +140,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 
 
 /* ── DETAIL PANEL ── */
-.detail-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300}
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(50,60,80,.4);z-index:300}
 .detail-overlay.open{display:block}
 .detail-panel{position:fixed;top:0;right:0;width:min(500px,100vw);height:100vh;background:var(--surface);border-left:1px solid var(--border-l);overflow-y:auto;z-index:301;transform:translateX(100%);transition:transform .3s ease}
 .detail-panel.open{transform:translateX(0)}
@@ -163,7 +164,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
 /* Score bar */
 .score-section{padding:14px 20px}
 .section-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-s);margin-bottom:8px}
-.score-track{height:6px;border-radius:3px;background:var(--border);position:relative}
+.score-track{height:6px;border-radius:3px;background:var(--border-l);position:relative}
 .score-fill{height:100%;border-radius:3px;transition:width .6s ease}
 .score-fill.buy{background:linear-gradient(90deg,var(--teal-d),var(--buy))}
 .score-fill.watch{background:linear-gradient(90deg,var(--teal-d),var(--watch))}
@@ -288,6 +289,7 @@ header{position:sticky;top:0;z-index:100;background:rgba(13,15,20,.94);backdrop-
       <div class="sort-option" data-sort="name"><div class="sort-radio"></div>Alphabet (A–Z)</div>
       <div class="sort-option" data-sort="marketcap"><div class="sort-radio"></div>Marktkapitalisierung</div>
       <div class="sort-option" data-sort="analyst_target"><div class="sort-radio"></div>Analysten-Kursziel (Upside %)</div>
+      <div class="sort-option" data-sort="dividend"><div class="sort-radio"></div>Dividendenrendite (höchste zuerst)</div>
     </div>
     <button class="modal-btn" id="sort-apply">Sortieren</button>
   </div>
@@ -524,6 +526,8 @@ function applyFilters() {
         const ub = b.analyst?.upside ?? -999;
         return ub - ua;
       }
+      case 'dividend':
+        return (b.dividendYield ?? -1) - (a.dividendYield ?? -1);
       default: return 0;
     }
   });
@@ -626,6 +630,7 @@ function renderCard(s) {
       <div class="metric-price">${fmtPrice(s.price)}</div>
       <div class="metric-label">Kurs (EUR)</div>
       <span class="abstand-badge ${abCls}">${abStr} Abst.</span>
+      ${s.dividendYield != null ? `<span class="div-badge">⬡ ${s.dividendYield.toFixed(2)}%</span>` : ''}
       ${analystBadge}
     </div>
     <button class="wl-btn ${starred?'starred':''}" data-symbol="${s.symbol}">${starred?'★':'☆'}</button>
@@ -806,6 +811,11 @@ function openDetail(symbol) {
         <div class="ds-v">${fmtEur(s.marketCap)}</div>
         <div class="ds-l">Marktkapitalisierung (EUR) ${s.currency&&s.currency!=='EUR'?'· Original: '+s.currency:''}</div>
       </div>
+      ${s.dividendYield != null ? `
+      <div class="ds" style="grid-column:span 3;background:rgba(26,138,150,.04);border-color:rgba(26,138,150,.2)">
+        <div class="ds-v" style="color:var(--teal)">⬡ ${s.dividendYield.toFixed(2)} %</div>
+        <div class="ds-l">Dividendenrendite (p.a., auf Basis des aktuellen Kurses)</div>
+      </div>` : ''}
     </div>
 
     <div class="score-section">
