@@ -616,6 +616,11 @@ def process(symbol, name, sector, exchange):
         except Exception as ae:
             pass  # Analysten-Daten optional – kein Abbruch
 
+        # ── DIVIDENDENRENDITE ────────────────────────────────
+        # Yahoo liefert dividendYield als Dezimalzahl (0.035 = 3.5%)
+        div_yield = info.get("dividendYield") or info.get("trailingAnnualDividendYield")
+        div_yield_pct = rv(div_yield * 100, 2) if div_yield and not math.isnan(float(div_yield)) else None
+
         return {
             "symbol":symbol, "name":name_a, "sector":sec, "exchange":exchange,
             "currency":currency,
@@ -624,6 +629,7 @@ def process(symbol, name, sector, exchange):
             "price":rv(price_eur), "high52w":rv(h52_eur), "marketCap":rv(mcap_eur,0),
             "fxRate":FX_RATES.get(currency,1.0),
             "abstand":ab, "rating":total, "recommendation":rec,
+            "dividendYield":div_yield_pct,
             "details":{
                 "eigenkapitalrentabilitaet":{"score":r_roe,"value":rv(roe*100) if roe else None,"unit":"%"},
                 "eigenkapitalquote":        {"score":r_eq, "value":eqr,"unit":"%"},
