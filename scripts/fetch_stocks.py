@@ -619,7 +619,19 @@ def process(symbol, name, sector, exchange):
         # ── DIVIDENDENRENDITE ────────────────────────────────
         # Yahoo liefert dividendYield als Dezimalzahl (0.035 = 3.5%)
         div_yield = info.get("dividendYield") or info.get("trailingAnnualDividendYield")
-        div_yield_pct = rv(div_yield * 100, 2) if div_yield and not math.isnan(float(div_yield)) else None
+        if div_yield and not math.isnan(float(div_yield)):
+            # Yahoo Finance liefert dividendYield als Dezimal (0.035 = 3.5%)
+            # Sicherheitscheck: Werte > 1.0 wären >100% Rendite – dann ist es schon ein Prozentwert
+            div_float = float(div_yield)
+            if div_float > 1.0:
+                div_yield_pct = rv(div_float, 2)       # bereits in Prozent
+            else:
+                div_yield_pct = rv(div_float * 100, 2) # Dezimal → Prozent
+            # Plausibilitätscheck: >50% Dividendenrendite ist unrealistisch → verwerfen
+            if div_yield_pct and div_yield_pct > 50:
+                div_yield_pct = None
+        else:
+            div_yield_pct = None
 
         return {
             "symbol":symbol, "name":name_a, "sector":sec, "exchange":exchange,
