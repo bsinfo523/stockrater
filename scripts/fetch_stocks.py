@@ -618,19 +618,55 @@ def process(symbol, name, sector, exchange):
 
         # ── DIVIDENDENRENDITE ────────────────────────────────
         # Yahoo liefert dividendYield als Dezimalzahl (0.035 = 3.5%)
-        div_yield = info.get("dividendYield") or info.get("trailingAnnualDividendYield")
-        if div_yield and not math.isnan(float(div_yield)):
-            # Yahoo Finance liefert dividendYield als Dezimal (0.035 = 3.5%)
-            # Sicherheitscheck: Werte > 1.0 wären >100% Rendite – dann ist es schon ein Prozentwert
-            div_float = float(div_yield)
-            if div_float > 1.0:
-                div_yield_pct = rv(div_float, 2)       # bereits in Prozent
-            else:
-                div_yield_pct = rv(div_float * 100, 2) # Dezimal → Prozent
-            # Plausibilitätscheck: >50% Dividendenrendite ist unrealistisch → verwerfen
-            if div_yield_pct and div_yield_pct > 50:
-                div_yield_pct = None
-        else:
+        # ── DIVIDENDENRENDITE: selbst berechnen aus lastDividendValue ──
+        # Zuverlässiger als dividendYield, das Yahoo inkonsistent liefert
+        # ── DIVIDENDENRENDITE ─────────────────────────────────────────────────
+        # Methode 1: dividendYield aus info (Dezimal, z.B. 0.035 = 3.5%)
+        # Methode 2: Historische Dividenden letzter 12 Monate ÷ Kurs
+        # Regel: Methode 1 wird NUR übernommen wenn Methode 2 den Wert bestätigt.
+        #        Toleranz: ±30% Abweichung zwischen beiden Methoden.
+        #        Ist nur Methode 2 verfügbar, wird deren Wert direkt genutzt.
+        div_yield_pct = None
+        try:
+            # Methode 1
+            m1 = None
+            dy = info.get("dividendYield")
+            if dy is not None:
+                dy_f = float(dy)
+                if not math.isnan(dy_f) and not math.isinf(dy_f) and 0 < dy_f < 0.15:
+                    m1 = round(dy_f * 100, 2)
+
+            # Methode 2: Historische Dividenden der letzten 12 Monate
+            m2 = None
+            try:
+                divs = t.dividends
+                if divs is not None and len(divs) > 0:
+                    cutoff = datetime.now() - timedelta(days=365)
+                    try:
+                        recent = divs[divs.index >= cutoff.strftime('%Y-%m-%d')]
+                    except Exception:
+                        recent = divs.iloc[-4:] if len(divs) >= 4 else divs
+                    if len(recent) > 0 and price_orig and float(price_orig) > 0:
+                        annual_sum = float(recent.sum())
+                        raw = (annual_sum / float(price_orig)) * 100
+                        if 0.01 < raw < 15:
+                            m2 = round(raw, 2)
+            except Exception:
+                pass
+
+            # Abgleich: beide Methoden müssen innerhalb ±30% übereinstimmen
+            if m1 is not None and m2 is not None:
+                abw = abs(m1 - m2) / max(m1, m2)   # relative Abweichung
+                if abw <= 0.30:
+                    div_yield_pct = round((m1 + m2) / 2, 2)  # Mittelwert
+                else:
+                    # Zu große Abweichung → Methode 2 bevorzugen (echte Zahlungen)
+                    div_yield_pct = m2
+            elif m2 is not None:
+                div_yield_pct = m2   # nur Methode 2 verfügbar
+            elif m1 is not None:
+                div_yield_pct = None # nur Methode 1 ohne Bestätigung → verwerfen
+        except Exception:
             div_yield_pct = None
 
         return {
