@@ -630,7 +630,7 @@ function renderCard(s) {
       <div class="metric-price">${fmtPrice(s.price)}</div>
       <div class="metric-label">Kurs (EUR)</div>
       <span class="abstand-badge ${abCls}">${abStr} Abst.</span>
-      ${s.dividendYield != null ? `<span class="div-badge">⬡ ${s.dividendYield.toFixed(2)}%</span>` : ''}
+      ${s.dividendYield != null && s.dividendYield <= 25 ? `<span class="div-badge">⬡ ${s.dividendYield.toFixed(2)}%</span>` : ''}
       ${analystBadge}
     </div>
     <button class="wl-btn ${starred?'starred':''}" data-symbol="${s.symbol}">${starred?'★':'☆'}</button>
@@ -811,7 +811,7 @@ function openDetail(symbol) {
         <div class="ds-v">${fmtEur(s.marketCap)}</div>
         <div class="ds-l">Marktkapitalisierung (EUR) ${s.currency&&s.currency!=='EUR'?'· Original: '+s.currency:''}</div>
       </div>
-      ${s.dividendYield != null ? `
+      ${s.dividendYield != null && s.dividendYield <= 25 ? `
       <div class="ds" style="grid-column:span 3;background:rgba(26,138,150,.04);border-color:rgba(26,138,150,.2)">
         <div class="ds-v" style="color:var(--teal)">⬡ ${s.dividendYield.toFixed(2)} %</div>
         <div class="ds-l">Dividendenrendite (p.a., auf Basis des aktuellen Kurses)</div>
